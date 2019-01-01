@@ -1,11 +1,13 @@
-function draw_bar_charts_nutriscore(){
-    var svg = d3.select("body"),
-	margin = { top: 0, right: 0, bottom: 0, left: 0 },
+function draw_bar_charts_nutriscore(dm){
+	var graphPosition = { top: 200, left: 800 };
+
+    var svg = d3.select("#viz"),
+	margin = { top: 20, right: 20, bottom: 30, left: 40 },
 	x = d3.scaleBand().padding(0.1),
 	y = d3.scaleLinear();
 
     var g = svg.append("g")
-	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	.attr("transform", "translate(" + (graphPosition.left + margin.left) + "," + (graphPosition.top + margin.top) + ")");
 
     g.append("g")
 	.attr("class", "axis axis--x");
@@ -22,7 +24,6 @@ function draw_bar_charts_nutriscore(){
 
     function draw() {
 
-	var dm = data_manager();
 	d3.tsv("../tsv/hypotesis.tsv", function(error, data){
 	    if(error) throw error;
 
