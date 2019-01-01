@@ -1,5 +1,5 @@
 function drawCountryGraph(countries) {
-	var graphPosition = { top: 0, left: 40 };
+	var graphPosition = { top: 200, left: 40 };
 	var cellMaxSize = 100;
 
 	var width = 700;
@@ -97,7 +97,7 @@ function initCountryGraph() {
 			
 			targetCountries.push(country);
 		}
-
+        console.log(targetCountries);
 		drawCountryGraph(targetCountries);
 	});
 }
