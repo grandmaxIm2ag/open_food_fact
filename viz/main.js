@@ -1,6 +1,7 @@
-function filter() {
-	
-}
+
+var filter = {
+	continent: 'europe'
+};
 
 function init() {
     var dm = data_manager();
