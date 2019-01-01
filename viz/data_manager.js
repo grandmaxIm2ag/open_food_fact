@@ -1,17 +1,53 @@
 function data_manager(){
     var dm = {};
     dm.filter = {
-	WORLD:0,
-	REGION:1
+	    WORLD:0,
+	    CONTINENT:1
     };
     dm.choosen_filter = dm.filter.WORLD;
-    dm.choosen_region = "Europe";
-    dm.accept = function(row){
-	return true;
+    dm.choosen_region = "africa";
+    dm.accept = function(value){
+        if(dm.choosen_filter == dm.filter.WORLD){
+	        return true;
+        }else{
+            return (value == dm.choosen_region); 
+        }
+        return false;
     };
-    dm.load = function(){
-	dm.load_histo_grade_data();
-    }
+    dm.get_data_nutriscore = function(callback){
+        var data_to_populate = [
+            {grade:"a", count:0.0},
+            {grade:"b", count:0.0},
+            {grade:"c", count:0.0},
+            {grade:"d", count:0.0},
+            {grade:"e", count:0.0}
+        ];
+        d3.tsv("../tsv/hypotesis.tsv", function(error, data){
+            if(error) throw error;
+            var tmp = {
+                "a":0,
+                "b":1,
+                "c":2,
+                "d":3,
+                "e":4,
+            };
+            for (var i = 1; i<data.length; i++){
+                
+                if(dm.accept(data[i].Continent)){
+                    var idx = tmp[data[i].grade];
+                    var v = data_to_populate[idx].count;
+                    data_to_populate[idx].count = (v + 1);
+                }
+            }
+            callback(data_to_populate);
+        });
+    };
+
+    dm.get_data_map = function(callback){
+        d3.json("continents.json" , function(error, world){
+            callback(world);
+        });
+    };
     return dm;
 }
 

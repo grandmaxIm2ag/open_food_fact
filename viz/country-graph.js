@@ -1,5 +1,5 @@
 function drawCountryGraph(products) {
-	var graphPosition = { top: 80, left: 0 };
+	var graphPosition = { top: 200, left: 0 };
 
 	var width = 700;
 	var height = 400;
