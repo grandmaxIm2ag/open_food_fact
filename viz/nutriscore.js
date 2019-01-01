@@ -1,6 +1,6 @@
 function draw_bar_charts_nutriscore(){
-    var svg = d3.select("svg"),
-	margin = { top: 20, right: 20, bottom: 30, left: 40 },
+    var svg = d3.select("body"),
+	margin = { top: 0, right: 0, bottom: 0, left: 0 },
 	x = d3.scaleBand().padding(0.1),
 	y = d3.scaleLinear();
 
@@ -51,7 +51,7 @@ function draw_bar_charts_nutriscore(){
 	    y.domain([0, d3.max(data_to_update.map(function (d) { return d.count; }))]);
 	    
 	    var width = 300 - margin.left - margin.right,
-		height = 200 - margin.top - margin.bottom;
+		    height = 200 - margin.top - margin.bottom;
 
 	    x.rangeRound([0, width]);
 	    y.rangeRound([height, 0]);

@@ -25,3 +25,15 @@ function color_nutriscore_grade(grade){
     case 'e': return d3.rgb(255,  25,   0);
     };
 }
+
+function color_continent(continent){
+    switch(continent){
+    case '': return "black";
+    case 'asia': return d3.rgb( 231, 76, 60 );
+    case 'africa': return d3.rgb( 142, 68, 173 );
+    case 'europe': return d3.rgb( 52, 152, 219 );
+    case 'northAmerica': return d3.rgb( 69, 179, 157 );
+    case 'oceania': return d3.rgb(45, 176, 65);
+    case 'southAmerica': return d3.rgb(0,0,0);
+    };
+}
