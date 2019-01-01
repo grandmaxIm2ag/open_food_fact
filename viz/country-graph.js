@@ -1,5 +1,5 @@
-function drawCountryGraph(countryMap) {
-	var graphPosition = { top: 0, left: 0 };
+function drawCountryGraph(countries) {
+	var graphPosition = { top: 0, left: 40 };
 	var cellMaxSize = 100;
 
 	var width = 700;
@@ -8,21 +8,13 @@ function drawCountryGraph(countryMap) {
 	var innerWidth = width - margin.left - margin.right;
 	var innerHeight = height - margin.top - margin.bottom;
 
-	var maxNbProd = 100;
-	var maxNbCat = 50;
+	var maxNbProd = d3.max(countries.map(function(o) { return o.products.length; }));
+	var maxNbCat = d3.max(countries.map(function(o) { return o.prodCategories.length; }));
 
-	for (var country in countryMap) {
-   		var products = countryMap[country].products;
-   		var prodCategories = countryMap[country].prodCategories;
+	maxNbProd += maxNbProd / 5;
+	maxNbCat += maxNbCat / 5;
 
-   		maxNbProd = d3.max([maxNbProd, products.length]);
-   		maxNbCat = d3.max([maxNbCat, prodCategories.length]);
-   	}
-
-	maxNbProd += maxNbProd / 4;
-	maxNbCat += maxNbCat / 4;
-
-	var x = d3.scaleLog().domain([20, maxNbProd]).range([0, innerWidth]);
+	var x = d3.scaleLog().domain([15, maxNbProd]).range([0, innerWidth]);
 	var xAxis = d3.axisBottom(x);
 
 	var y = d3.scaleLinear().domain([0, maxNbCat]).range([innerHeight, 0]);
@@ -36,28 +28,47 @@ function drawCountryGraph(countryMap) {
 		.attr("transform", "translate(" + margin.left + ", " + (height - margin.bottom) + ")")
    		.call(xAxis);
 
+   	g.append("text")             
+      .attr("transform",
+            "translate(" + (width / 2) + " ," + 
+                           (height + margin.top + 20) + ")")
+      .style("text-anchor", "middle")
+      .text("Products");
+
     g.append("g")
     	.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
         .call(yAxis);
 
+    g.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - (margin.left / 3))
+      .attr("x",0 - (height / 2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Categories");     
+
     var countryGroup = g.append("g")
     				.attr("transform", "translate(" + margin.left + ", " + margin.top + ")" );
 
-   	for (var country in countryMap) {
-   		var products = countryMap[country].products;
-   		var prodCategories = countryMap[country].prodCategories;
+   	countryGroup.selectAll("circle")
+   		.data(countries)
+   		.enter()
+    	.append("circle")
+    	.attr("r", function(d) { 
+	    	var nbNutriA = d.products.filter(o => "a" == o.grade.toLowerCase()).length;
+	   		var propNutriA = nbNutriA / d.products.length;
+	    	return cellMaxSize * propNutriA;
+	    })
+	    .attr("cx", function(d) { return x(d.products.length); })
+	    .attr("cy", function(d) { return y(d.prodCategories.length); })
+	    .attr('fill-opacity', 0.4)
+	    .append("svg:title")
+				.text(function(d) { return d.name });
 
-   		var nbNutriA = products.filter(o => "a" == o.grade.toLowerCase()).length;
-
-   		var propNutriA = nbNutriA / products.length;
-
-  		countryGroup.append("circle")
-			.attr("r", cellMaxSize * propNutriA)
-			.attr("cx", x(products.length))
-			.attr("cy", y(prodCategories.length))
-			.append("svg:title")
-				.text(country);	
-	}
+	// events
+	countryGroup.selectAll("circle").on("click", function(country) {
+       
+    });
 }
 
 function initCountryGraph() {
@@ -70,22 +81,23 @@ function initCountryGraph() {
 		var countries = products.map(function(o) { return o.Country; });
 		countries = Array.from(new Set(countries));
 
-		var countryMap = {};
+		var targetCountries = [];
 		for (var i = 0; i < countries.length; i++) {
 			var countryName = countries[i];
-			var country = countryMap[countryName] || {};
 
 			var countryProds = products.filter(o => o.Country.toLowerCase() === countryName.toLowerCase());
 
 			var prodCategories = countryProds.map(function(o) { return o.Categorie; });
 			prodCategories = Array.from(new Set(prodCategories));
 
+			var country = {};
+			country.name = countryName;
 			country.products = countryProds;
 			country.prodCategories = prodCategories;
-
-			countryMap[countryName] = country;
+			
+			targetCountries.push(country);
 		}
 
-		drawCountryGraph(countryMap);
+		drawCountryGraph(targetCountries);
 	});
 }
