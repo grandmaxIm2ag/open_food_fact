@@ -31,10 +31,12 @@ function draw_wordlmap(dm, obs){
                                          (d.properties.continent); })
             .attr("d", path)
             .on("click", function(d){
-                console.log(d.properties.continent);
                 dm.choosen_filter = dm.filter.CONTINENT;
                 dm.choosen_region = d.properties.continent;
                 notifyAll(obs, dm);
+            })
+            .on("keypress", function(d) {
+                console.log("keypress"); // also tried "keyup", "keydown", "key"
             });
     }
 

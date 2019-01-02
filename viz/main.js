@@ -1,12 +1,12 @@
 function init() {
     var dm = data_manager();
     var nutri = nutriscore();
-    
-    var Observer=[nutri];
+    var count_graph = country_graph();
+    var Observer=[nutri, count_graph];
     
     draw_wordlmap(dm,Observer);
 	nutri.draw_bar_charts_nutriscore(dm);
-	initCountryGraph(dm);
+	count_graph.initCountryGraph(dm);
 
 }
 
