@@ -43,6 +43,35 @@ function data_manager(){
         });
     };
 
+    dm.get_data_country_graph = function(callback)  {
+	    d3.tsv("../tsv/hypotesis.tsv", function(error, data) {
+		    if(error) throw error;
+
+		    var products = data;
+            
+		    var countries = products.map(function(o) { return o.Country; });
+		    countries = Array.from(new Set(countries));
+
+            
+		    var targetCountries = [];
+		    for (var i = 0; i < countries.length; i++) {
+			    var countryName = countries[i];
+
+			    var countryProds = products.filter(o => o.Country.toLowerCase() === countryName.toLowerCase());
+
+			    var prodCategories = countryProds.map(function(o) { return o.Categorie; });
+			    prodCategories = Array.from(new Set(prodCategories));
+
+			    var country = {};
+			    country.name = countryName;
+			    country.products = countryProds;
+			    country.prodCategories = prodCategories;
+                targetCountries.push(country);
+		    }
+            callback(targetCountries);
+	    });
+    };
+    
     dm.get_data_map = function(callback){
         d3.json("continents.json" , function(error, world){
             callback(world);

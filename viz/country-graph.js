@@ -1,5 +1,8 @@
+function country_graph(){
+
 function drawCountryGraph(countries) {
-	var graphPosition = { top: 200, left: 40 };
+    console.log(countries);
+    var graphPosition = { top: 200, left: 40 };
 	var cellMaxSize = 100;
 
 	var width = 700;
@@ -9,12 +12,13 @@ function drawCountryGraph(countries) {
 	var innerHeight = height - margin.top - margin.bottom;
 
 	var maxNbProd = d3.max(countries.map(function(o) { return o.products.length; }));
+    var minNbProd = d3.min(countries.map(function(o) { return o.products.length; }));
 	var maxNbCat = d3.max(countries.map(function(o) { return o.prodCategories.length; }));
 
 	maxNbProd += maxNbProd / 5;
 	maxNbCat += maxNbCat / 5;
 
-	var x = d3.scaleLog().domain([15, maxNbProd]).range([0, innerWidth]);
+	var x = d3.scaleLog().domain([minNbProd, maxNbProd]).range([0, innerWidth]);
 	var xAxis = d3.axisBottom(x);
 
 	var y = d3.scaleLinear().domain([0, maxNbCat]).range([innerHeight, 0]);
@@ -61,7 +65,9 @@ function drawCountryGraph(countries) {
 	    })
 	    .attr("cx", function(d) { return x(d.products.length); })
 	    .attr("cy", function(d) { return y(d.prodCategories.length); })
-	    .attr('fill-opacity', 0.4)
+	    .attr('fill-opacity', 1)
+        .style("fill", function(d) { return color_continent
+                                     (d.continent); })
 	    .append("svg:title")
 				.text(function(d) { return d.name });
 
@@ -71,33 +77,26 @@ function drawCountryGraph(countries) {
     });
 }
 
-function initCountryGraph() {
-	d3.tsv("../tsv/hypotesis.tsv", function(error, data) {
-		if(error) throw error;
+function initCountryGraph(dm){
+    dm.get_data_country_graph(function (countries){
+        d3.csv("../continent-countries.csv", function(error, data) {
+		    if(error) throw error;
+            var targetCountries = [];
+            countries.forEach(function(d){
+                var tmp = {};
+                tmp.name = d.name;
+			    tmp.products = d.products;
+			    tmp.prodCategories = d.prodCategories;
+                for (var i = 1; i<data.length; i++){
+                    if(data[i].Country.toLowerCase() == d.name){
+                        tmp.continent = data[i].Continent; 
+                    }
+                }
+                targetCountries.push(tmp);
+            });
+            drawCountryGraph(targetCountries);
+        });
+    });
+}
 
-		var products = data.filter(
-			o => o.Continent.toLowerCase() === filter.continent.toLowerCase());
-
-		var countries = products.map(function(o) { return o.Country; });
-		countries = Array.from(new Set(countries));
-
-		var targetCountries = [];
-		for (var i = 0; i < countries.length; i++) {
-			var countryName = countries[i];
-
-			var countryProds = products.filter(o => o.Country.toLowerCase() === countryName.toLowerCase());
-
-			var prodCategories = countryProds.map(function(o) { return o.Categorie; });
-			prodCategories = Array.from(new Set(prodCategories));
-
-			var country = {};
-			country.name = countryName;
-			country.products = countryProds;
-			country.prodCategories = prodCategories;
-			
-			targetCountries.push(country);
-		}
-        console.log(targetCountries);
-		drawCountryGraph(targetCountries);
-	});
 }
