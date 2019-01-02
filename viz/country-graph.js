@@ -2,12 +2,12 @@ function country_graph(){
 
     var count_graph = {};
     count_graph.svg = d3.select("#viz");
-    count_graph.graphPosition = { top: 200, left: 40 };
+    count_graph.graphPosition = { top: 400, left: 40 };
 	count_graph.cellMaxSize = 100;
 
 	count_graph.width = 700;
 	count_graph.height = 400;
-	count_graph.margin = { left: 40, right: 0, top: 10, bottom: 10 };
+	count_graph.margin = { top: 20, right: 20, bottom: 30, left: 40 };
 	count_graph.innerWidth = count_graph.width -
         count_graph.margin.left - count_graph.margin.right;
 	count_graph.innerHeight = count_graph.height -
@@ -100,7 +100,7 @@ function country_graph(){
         count_graph.svg.selectAll(".axis--x_country").remove();
         count_graph.svg.selectAll(".axis--y_country").remove();
         dm.get_data_country_graph(function (countries){
-            d3.csv("../continent-countries.csv", function(error, data) {
+            d3.csv("../csv/continent-countries.csv", function(error, data) {
 		        if(error) throw error;
                 var targetCountries = [];
                 countries.forEach(function(d){

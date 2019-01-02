@@ -1,6 +1,6 @@
 function draw_wordlmap(dm, obs){
-    var graphPosition = { top: -100, left:800 };
-    var margin = { left: 40, right: 0, top: 00, bottom: 10};
+    var graphPosition = { top: 0, left:900 };
+    var margin = { top: 20, right: 20, bottom: 30, left: 40};
     var width = 400 - margin.left - margin.right;
     var height = 330 - margin.top - margin.bottom;
 

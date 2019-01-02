@@ -73,7 +73,7 @@ function data_manager(){
     };
     
     dm.get_data_map = function(callback){
-        d3.json("continents.json" , function(error, world){
+        d3.json("../json/continents.json" , function(error, world){
             callback(world);
         });
     };
