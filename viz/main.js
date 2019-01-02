@@ -1,6 +1,6 @@
 
 var filter = {
-	continent: 'europe'
+	continent: null
 };
 
 function init() {

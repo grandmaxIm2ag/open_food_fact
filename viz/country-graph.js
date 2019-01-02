@@ -14,7 +14,7 @@ function drawCountryGraph(countries) {
 	maxNbProd += maxNbProd / 5;
 	maxNbCat += maxNbCat / 5;
 
-	var x = d3.scaleLog().domain([15, maxNbProd]).range([0, innerWidth]);
+	var x = d3.scaleLog().domain([5, maxNbProd]).range([0, innerWidth]);
 	var xAxis = d3.axisBottom(x);
 
 	var y = d3.scaleLinear().domain([0, maxNbCat]).range([innerHeight, 0]);
@@ -75,8 +75,11 @@ function initCountryGraph() {
 	d3.tsv("../tsv/hypotesis.tsv", function(error, data) {
 		if(error) throw error;
 
-		var products = data.filter(
+		var products = data;
+		if (filter.continent) {
+			products = data.filter(
 			o => o.Continent.toLowerCase() === filter.continent.toLowerCase());
+		}
 
 		var countries = products.map(function(o) { return o.Country; });
 		countries = Array.from(new Set(countries));
