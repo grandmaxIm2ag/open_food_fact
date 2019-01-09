@@ -10,7 +10,7 @@ function data_manager(){
         if(dm.choosen_filter == dm.filter.WORLD){
 	        return true;
         }else{
-            return (value == dm.choosen_region); 
+            return (value.Continent == dm.choosen_region); 
         }
         return false;
     };
@@ -33,7 +33,7 @@ function data_manager(){
             };
             for (var i = 1; i<data.length; i++){
                 
-                if(dm.accept(data[i].Continent)){
+                if(dm.accept(data[i])){
                     var idx = tmp[data[i].grade];
                     var v = data_to_populate[idx].count;
                     data_to_populate[idx].count = (v + 1);
