@@ -1,7 +1,8 @@
-function country_graph(){
+function country_graph(svg){
 
     var count_graph = {};
-    count_graph.svg = d3.select("#viz");
+    count_graph.popup = false;
+    count_graph.svg = svg;
     count_graph.graphPosition = { top: 400, left: 40 };
     count_graph.cellMaxSize = 100;
 
@@ -13,7 +14,7 @@ function country_graph(){
     count_graph.innerHeight = count_graph.height -
         count_graph.margin.top - count_graph.margin.bottom;
 
-    count_graph.drawCountryGraph = function (countries) {
+    count_graph.drawCountryGraph = function (countries, dm) {
         
         var maxNbProd = d3.max(countries.map(function(o) { return o.products.length; }));
         var minNbProd = d3.min(countries.map(function(o) { return o.products.length; }));
@@ -90,9 +91,30 @@ function country_graph(){
 	    .text(function(d) { return d.Country });
 
 	// events
-	countryGroup.selectAll("circle").on("click", function(country) {
-            
-        });
+	countryGroup.selectAll("circle").on("click",function(d) {
+	    if(count_graph){
+		count_graph = false;
+		d3.selectAll("div.tooltip_country").remove();
+	    }else{
+		count_graph = true;
+		var div = d3.select("body").append("div")
+		    .attr("class", "tooltip_country")
+		    .style("opacity", 0.9);
+		create_popup(div,500,350, function(div){
+		    var dm_bis = dm.copy();
+		    dm.choosen_filter = dm.filter.COUNTRY;
+		    dm.choosen_country = d.Country;
+		    var svg_bis = div.append("svg")
+			.style("width", 350 + 'px')
+			.style("height", 500 + 'px');
+		    var nutri_bis = nutriscore(svg_bis);
+		    nutri_bis.graphPosition = { top: 0, left: 0 };
+		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
+		    console.log(nutri_bis);
+		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
+		});
+	    }
+	});
 
 	countryGroup.selectAll("circle").on("mouseover", function(d) {
             var line_data = [
@@ -140,7 +162,7 @@ function country_graph(){
                         targetCountries.push(tmp);
                     }
                 });
-                count_graph.drawCountryGraph(targetCountries);
+                count_graph.drawCountryGraph(targetCountries, dm);
             });
         });
     };

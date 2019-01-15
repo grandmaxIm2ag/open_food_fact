@@ -1,4 +1,4 @@
-function worldmap(obs){
+function worldmap(obs, svg){
     var worldmap = {};
     worldmap.obs = obs;
     worldmap.obs.push(worldmap);
@@ -14,7 +14,7 @@ function worldmap(obs){
             .translate( [width / 2, height / 1.5]);
 
     worldmap.path.projection(worldmap.projection);        
-    worldmap.svg = d3.select('#viz').append("svg")
+    worldmap.svg = svg.append("svg")
             .attr("id", "svg")
             .attr("width", width)
             .attr("height", height)

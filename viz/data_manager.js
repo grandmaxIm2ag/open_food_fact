@@ -93,6 +93,17 @@ function data_manager(){
             callback(world);
         });
     };
+
+    dm.copy = function(){
+	var other = data_manager();
+	other.filter_grade=dm.filter_grade;
+	other.choosen_filter=dm.choosen_filter;
+	other.choosen_region=dm.choosen_region;
+	other.choosen_country=dm.choosen_country;
+	other.choosen_grade=dm.choosen_grade;
+	return other;
+    }
+    
     return dm;
 }
 
