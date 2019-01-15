@@ -87,23 +87,12 @@ function country_graph(){
             .style("fill", function(d) { return color_continent(d.Continent
                                                                ); })
 	    .append("svg:title")
-	    .text(function(d) { return d.name });
+	    .text(function(d) { return d.Country });
 
 	// events
 	countryGroup.selectAll("circle").on("click", function(country) {
             
         });
-	countryGroup.selectAll("circle").on("mouseover", function(country) {
-            countryGroup.append("text")
-		.attr("class", "test_name_country")
-		.attr("x", x(country.products.length))
-		.attr("y", y(country.prodCategories.length))
-		.text(country.name);
-        });
-	countryGroup.selectAll("circle").on("mouseout", function(country) {
-            count_graph.svg.selectAll(".test_name_country").remove();
-        });
-
     };
 
     count_graph.notify = function (dm){
@@ -116,11 +105,11 @@ function country_graph(){
                 var targetCountries = [];
                 countries.forEach(function(d){
                     var tmp = {};
-                    tmp.name = d.name;
+                    tmp.Country = d.Country;
 		    tmp.products = d.products;
 		    tmp.prodCategories = d.prodCategories;
                     for (var i = 1; i<data.length; i++){
-                        if(data[i].Country.toLowerCase() == d.name){
+                        if(data[i].Country.toLowerCase() == d.Country){
                             tmp.Continent = data[i].Continent; 
                         }
                     }

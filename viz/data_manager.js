@@ -1,18 +1,34 @@
 function data_manager(){
     var dm = {};
     dm.filter = {
-	    WORLD:0,
-	    CONTINENT:1
+	WORLD:0,
+	CONTINENT:1,
+	COUNTRY:2
     };
+    dm.filter_grade = false;
     dm.choosen_filter = dm.filter.WORLD;
     dm.choosen_region = "africa";
+    dm.choosen_country = "france";
+    dm.choosen_grade = "A";
     dm.accept = function(value){
-        if(dm.choosen_filter == dm.filter.WORLD){
-	        return true;
-        }else{
-            return (value.Continent == dm.choosen_region); 
-        }
-        return false;
+	var b = true;
+	switch(dm.choosen_filter){
+        case dm.filter.WORLD:
+	    b = b & true;
+	    break;
+        case dm.filter.COUNTRY:
+            b = b & (value.Country == dm.choosen_country); 
+	    break;
+	case dm.filter.CONTINENT:
+            b = b & (value.Continent == dm.choosen_region); 
+	    break;
+	}
+	
+	if(dm.filter_grade){
+	    b = b & (value.grade == dm.choosen_grade); 
+	}
+	
+        return b;
     };
     dm.get_data_nutriscore = function(callback){
         var data_to_populate = [
@@ -63,7 +79,7 @@ function data_manager(){
 			    prodCategories = Array.from(new Set(prodCategories));
 
 			    var country = {};
-			    country.name = countryName;
+			    country.Country = countryName;
 			    country.products = countryProds;
 			    country.prodCategories = prodCategories;
                 targetCountries.push(country);

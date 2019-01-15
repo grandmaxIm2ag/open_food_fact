@@ -3,10 +3,10 @@ function init() {
     var nutri = nutriscore();
     var count_graph = country_graph();
     var Observer=[nutri, count_graph];
-    
-    draw_wordlmap(dm,Observer);
-	nutri.draw_bar_charts_nutriscore(dm);
-	count_graph.initCountryGraph(dm);
+    var map = worldmap(Observer); 
+    map.draw_worldmap(dm);
+    nutri.draw_bar_charts_nutriscore(dm);
+    count_graph.initCountryGraph(dm);
 
 }
 
