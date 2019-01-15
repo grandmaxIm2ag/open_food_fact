@@ -93,6 +93,29 @@ function country_graph(){
 	countryGroup.selectAll("circle").on("click", function(country) {
             
         });
+
+	countryGroup.selectAll("circle").on("mouseover", function(d) {
+            var line_data = [
+		{"x":minNbProd , "y":d.prodCategories.length},
+		{"x":d.products.length , "y":d.prodCategories.length},
+		{"x":d.products.length , "y":0}
+	    ];
+	    var line_function = d3.line()
+		.x(function(d){return x(d.x)})
+		.y(function(d){return y(d.y)});
+	    
+	    countryGroup
+		.append("path")
+		.attr("d", line_function(line_data))
+		.attr("stroke", "black")
+	        .attr("stroke-width", 2)
+		.attr("class", "line dashed")
+		.attr("fill", "none");
+        });
+
+	countryGroup.selectAll("circle").on("mouseout", function(d) {
+            countryGroup.selectAll("path").remove();
+        });
     };
 
     count_graph.notify = function (dm){
