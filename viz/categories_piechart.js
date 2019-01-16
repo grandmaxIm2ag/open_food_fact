@@ -1,4 +1,4 @@
-function piechart(){
+function piechart(svg){
 	console.log("test0");	
 	var pc = {};
 	var threshold = 10;		// Number of slices, not counting Others
@@ -21,16 +21,18 @@ function piechart(){
 	pc.height = 300 - pc.margin.top - pc.margin.bottom;
 	
 	console.log("test01");
-	pc.svg = d3.select("#viz");
+	pc.svg = svg;
 	
-	pc.svg.append("svg")
-			.attr("width", pc.width)
-			.attr("height", pc.height)
-		.append("g")
-			.attr('transform', 'translate(' + pc.graphPosition.left + ',' + pc.graphPosition.top + ')');
-			console.log("test10");
+	pc.g = pc.svg.append("g")
+			.attr("transform", "translate(" + (pc.graphPosition.left
+                                               + pc.margin.left) +
+                  "," + (pc.graphPosition.top + pc.margin.top)
+                  + ")")
+             .attr("class", "piechart");
+			
 	var arc = d3.arc()
-	    .outerRadius(pc.radius);
+	    .outerRadius(pc.radius)
+	    .innerRadius(0);
 	    
 	var pie = d3.pie()
 	    .value(function(d) { return d.value; })
@@ -40,24 +42,23 @@ function piechart(){
 	pc.draw = function(countData){
 		
 		var data_to_use = countData.slice(0, threshold);
+		console.log(pie(data_to_use));
 		data_to_use.push({ key:"others", value:pc.sumValue(countData)-pc.sumValue(data_to_use) });
 	
-		pc.svg.selectAll(".slice")
+		pc.g.selectAll(".slice")
 			.data(pie([data_to_use]))
-			.enter()
-				.append("g")
-					.attr("class", "slice")
-				.append("path")
-					.attr('d', arc)
-					.attr('fill', function(d, i) { return pc.colorShades(i); })
-		    	.append("text")
+			.enter().append("path")
+			.attr("class", "slice")
+			.attr('d', arc)
+			.attr('fill', function(d, i) { return pc.colorShades(i); });
+		/*pc.g.append("text")
 		    		.attr("transform", function(d) {
 		    			d.innerRadius = 0;
 		    			d.outerRadius = pc.radius;
 		    			return "translate(" + arc.centroid(d) + ")"; })
 		    		.attr("text-anchor", "middle")
 		    		.text(function(d) { return d.key; });
-		    		
+		 */   		
 	};
 	console.log("test2");
 	pc.notify = function(dm){

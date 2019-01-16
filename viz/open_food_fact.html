@@ -5,6 +5,28 @@
   <style type="text/css" media="screen, print">
     body { margin: 30px 50px; float: left;}
     map2 { margin: 30px 50px; float: left;}
+
+    .line.dashed {stroke-dasharray: 10 10;}
+
+    div.tooltip_nutriscore {
+    position: absolute;
+    text-align: center;
+    width: 350px;
+    height: 250px;
+    background: lightsteelblue;
+    pointer-events: none;
+    margin: 30px 50px; float: left;
+    }
+
+    div.tooltip_country {
+    position: absolute;
+    text-align: center;
+    width: 350px;
+    height: 500px;
+    background: lightsteelblue;
+    pointer-events: none;
+    margin: 30px 50px; float: left;
+    }
   </style>
   <title>Open Food Fact</title>
 </head>
@@ -20,5 +42,6 @@
   <script src="categories_piechart.js"></script>
   <script src="world_map.js"></script>
   <script src="country-graph.js"></script>
+  <script src="popup.js"></script>
   <script src="main.js"></script>
 </body>

@@ -1,18 +1,34 @@
 function data_manager(){
     var dm = {};
     dm.filter = {
-	    WORLD:0,
-	    CONTINENT:1
+	WORLD:0,
+	CONTINENT:1,
+	COUNTRY:2
     };
+    dm.filter_grade = false;
     dm.choosen_filter = dm.filter.WORLD;
     dm.choosen_region = "africa";
+    dm.choosen_country = "france";
+    dm.choosen_grade = "A";
     dm.accept = function(value){
-        if(dm.choosen_filter == dm.filter.WORLD){
-	        return true;
-        }else{
-            return (value == dm.choosen_region); 
-        }
-        return false;
+	var b = true;
+	switch(dm.choosen_filter){
+        case dm.filter.WORLD:
+	    b = b & true;
+	    break;
+        case dm.filter.COUNTRY:
+            b = b & (value.Country == dm.choosen_country); 
+	    break;
+	case dm.filter.CONTINENT:
+            b = b & (value.Continent == dm.choosen_region); 
+	    break;
+	}
+	
+	if(dm.filter_grade){
+	    b = b & (value.grade == dm.choosen_grade); 
+	}
+	
+        return b;
     };
     
     dm.get_data_nutriscore = function(callback){
@@ -35,7 +51,7 @@ function data_manager(){
             
             for (var i = 1; i<data.length; i++){
                 
-                if(dm.accept(data[i].Continent)){
+                if(dm.accept(data[i])){
                     var idx = tmp[data[i].grade];
                     var v = data_to_populate[idx].count;
                     data_to_populate[idx].count = (v + 1);
@@ -65,7 +81,7 @@ function data_manager(){
 			    prodCategories = Array.from(new Set(prodCategories));
 
 			    var country = {};
-			    country.name = countryName;
+			    country.Country = countryName;
 			    country.products = countryProds;
 			    country.prodCategories = prodCategories;
                 targetCountries.push(country);
@@ -103,13 +119,23 @@ function data_manager(){
 				return arr;
 			}
 			
-			var filtData = [] = data.filter(entry => dm.accept(entry.Continent));		// Filtering
+			var filtData = [] = data.filter(entry => dm.accept(entry));		// Filtering
 			var countData = countBy(filtData, 'Categorie');								// Counting the number of products for each category
 			countData.sort(function(a, b){return b.value-a.value});
 			callback (countData);
 		});
     
 	}
+	
+    dm.copy = function(){
+	var other = data_manager();
+	other.filter_grade=dm.filter_grade;
+	other.choosen_filter=dm.choosen_filter;
+	other.choosen_region=dm.choosen_region;
+	other.choosen_country=dm.choosen_country;
+	other.choosen_grade=dm.choosen_grade;
+	return other;
+    }
     
     return dm;
 }
