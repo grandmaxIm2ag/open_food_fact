@@ -6,6 +6,8 @@ function country_graph(svg){
     count_graph.graphPosition = { top: 400, left: 40 };
     count_graph.cellMaxSize = 100;
 
+    var selectCountry = false;
+
     count_graph.width = 700;
     count_graph.height = 400;
     count_graph.margin = { top: 20, right: 20, bottom: 30, left: 40 };
@@ -49,7 +51,7 @@ function country_graph(svg){
             .attr("transform",
                   "translate(" + (count_graph.width / 2) + " ," + 
                   (count_graph.height + count_graph.margin
-                   .top + 20) + ")")
+                   .top) + ")")
             .style("text-anchor", "middle")
             .text("Products");
 
@@ -88,31 +90,52 @@ function country_graph(svg){
             .style("fill", function(d) { return color_continent(d.Continent
                                                                ); })
 	    .append("svg:title")
-	    .text(function(d) { return d.Country });
+	    .text(function(d) { return firstCapital(d.Country) });
 
 	// events
-	countryGroup.selectAll("circle").on("click",function(d) {
-	    if(count_graph){
-		count_graph = false;
-		d3.selectAll("div.tooltip_country").remove();
-	    }else{
-		count_graph = true;
-		var div = d3.select("body").append("div")
-		    .attr("class", "tooltip_country")
-		    .style("opacity", 0.9);
-		create_popup(div,500,350, function(div){
-		    var dm_bis = dm.copy();
-		    dm.choosen_filter = dm.filter.COUNTRY;
-		    dm.choosen_country = d.Country;
-		    var svg_bis = div.append("svg")
-			.style("width", 350 + 'px')
-			.style("height", 500 + 'px');
-		    var nutri_bis = nutriscore(svg_bis);
-		    nutri_bis.graphPosition = { top: 0, left: 0 };
-		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
-		    console.log(nutri_bis);
-		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
-		});
+	countryGroup.selectAll("circle").on("click", function(d) {
+	    if (selectCountry) {
+           selectCountry = false;
+		   d3.selectAll("div.tooltip_country").remove();
+	    } else {   
+            selectCountry = true
+    		var div = d3.select("body")
+                .append("div")
+    		    .attr("class", "tooltip_country")
+                .style("padding", '10px')
+    		    .style("opacity", 0.9);
+
+    		create_popup(div,500,350, function(div){
+    		    var dm_bis = dm.copy();
+    		    dm.choosen_filter = dm.filter.COUNTRY;
+    		    dm.choosen_country = d.Country;
+
+                var header = div.append("div");
+                header.append("h1")
+                    .text(firstCapital(d.Country));
+
+                var content = div.append("div");
+
+                content.append("p")
+                    .attr("align", "left")
+                    .text("Product: " + d.products.length);
+
+                content.append("p")
+                    .attr("align", "left")
+                    .text("Category: " + d.prodCategories.length);
+
+    		    var svg_bis = div.append("svg")
+    			.style("width", 350 + 'px')
+    			.style("height", 500 + 'px');
+
+    		    var nutri_bis = nutriscore(svg_bis);
+    		    nutri_bis.graphPosition = { top: 0, left: 0 };
+    		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
+
+    		    console.log(nutri_bis);
+
+    		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
+    		});
 	    }
 	});
 
