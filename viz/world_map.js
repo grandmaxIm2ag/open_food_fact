@@ -31,7 +31,6 @@ function worldmap(obs, svg){
 	    .enter()
 	    .filter(
 		function(d){
-		    console.log(dm.choosen_filter);
 		    if(dm.choosen_filter == dm.filter.CONTINENT &&
 		       dm.choosen_region != d.properties.continent){
 			return false;
@@ -47,7 +46,6 @@ function worldmap(obs, svg){
             .on("click", function(d){
 		if(dm.choosen_filter == dm.filter.CONTINENT && dm.choosen_region
 		   == d.properties.continent){
-		    console.log("coucou");
 		    dm.choosen_filter = dm.filter.WORLD;
 		}else{
                     dm.choosen_filter = dm.filter.CONTINENT;

@@ -92,11 +92,13 @@ function country_graph(svg){
 
 	// events
 	countryGroup.selectAll("circle").on("click",function(d) {
-	    if(count_graph){
-		count_graph = false;
+	    if(count_graph.popup){
+		console.log("Delete popup");
+		count_graph.popup = false;
 		d3.selectAll("div.tooltip_country").remove();
 	    }else{
-		count_graph = true;
+		console.log("Create popup");
+		count_graph.popup = true;
 		var div = d3.select("body").append("div")
 		    .attr("class", "tooltip_country")
 		    .style("opacity", 0.9);
@@ -110,7 +112,6 @@ function country_graph(svg){
 		    var nutri_bis = nutriscore(svg_bis);
 		    nutri_bis.graphPosition = { top: 0, left: 0 };
 		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
-		    console.log(nutri_bis);
 		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
 		});
 	    }
