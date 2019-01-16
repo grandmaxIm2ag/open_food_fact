@@ -3,8 +3,12 @@
 <head>
   <meta charset="utf-8">
   <style type="text/css" media="screen, print">
-    body { margin: 30px 50px; float: left;}
-    map2 { margin: 30px 50px; float: left;}
+    body { margin: 15px 15px 15px 15px; float: left; width: 100%; height: 100%; padding: 10px; }
+    map2 { margin: 15px 15px; float: left;}
+
+    .no-margin {
+      margin: 0px;
+    }
 
     .line.dashed {stroke-dasharray: 5 5;}
     div.tooltip_nutriscore {
@@ -40,8 +44,8 @@
 </head>
 
 <body>
-  <h1>Open Food Fact</h1>
-  <svg width="1500" height="900" id="viz"></svg>
+  <h1 class="no-margin">Open Food Fact</h1>
+  <svg width="100%" height="900" id="viz"></svg>
 
   
   <script src="../vendor/d3/d3.js"></script>

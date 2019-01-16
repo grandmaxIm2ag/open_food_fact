@@ -8,8 +8,8 @@ function piechart(svg){
 		return collection.reduce(function(tot,cur){return tot+cur.value;},0);
 	};
 	
-	pc.radius = 100;
-	pc.graphPosition = { top: 650 + pc.radius, left: 950 + pc.radius };
+	pc.radius = 80;
+	pc.graphPosition = { top: 400 + pc.radius, left: 830 + pc.radius };
 	pc.margin = { top: 20, right: 20, bottom: 30, left: 40 };
 	pc.width = 400 - pc.margin.left - pc.margin.right;
 	pc.height = 300 - pc.margin.top - pc.margin.bottom;

@@ -3,14 +3,14 @@ function country_graph(svg){
     var count_graph = {};
     count_graph.popup = false;
     count_graph.svg = svg;
-    count_graph.graphPosition = { top: 400, left: 40 };
+    count_graph.graphPosition = { top: 50, left: 20 };
     count_graph.cellMaxSize = 100;
 
     var selectCountry = false;
 
     count_graph.width = 700;
-    count_graph.height = 400;
-    count_graph.margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    count_graph.height = 500;
+    count_graph.margin = { top: 20, right: 20, bottom: 20, left: 40 };
     count_graph.innerWidth = count_graph.width -
         count_graph.margin.left - count_graph.margin.right;
     count_graph.innerHeight = count_graph.height -

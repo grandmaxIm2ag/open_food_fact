@@ -1,6 +1,6 @@
 function nutriscore(svg){ 
     var nutri = {};
-    nutri.graphPosition = { top: 400, left: 950 };
+    nutri.graphPosition = { top: 190, left: 800 };
     
     nutri.svg = svg;
 	nutri.margin = { top: 20, right: 20, bottom: 30, left: 40 };
