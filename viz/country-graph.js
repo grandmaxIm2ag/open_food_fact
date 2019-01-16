@@ -103,35 +103,42 @@ function country_graph(svg){
                     .append("div")
     		    .attr("class", "tooltip_country")
                     .style("padding", '10px')
-    		    .style("opacity", 0.9);
+    		    .style("opacity", 1);
 
     		create_popup(div,500,350, function(div){
     		    var dm_bis = dm.copy();
     		    dm_bis.choosen_filter = dm.filter.COUNTRY;
     		    dm_bis.choosen_country = d.Country;
 		    dm_bis.choosen_region = d.Continent;
-                    var header = div.append("div");
-                    header.append("h1")
-			.text(firstCapital(d.Country))
-			.append("cross")
-		        .attr("rx", 25)
-		        .attr("ry", 10)
-			.style("fill","black")
-			.on("click", function(){d3.selectAll("div.tooltip_country").remove();});
 
-                    var content = div.append("div");
+                var btnClose = div.append("a")
+                                    .attr("class", "close");
+                btnClose.on("click", function() {
+                    div.remove();
+                    selectCountry = false;
+                });
 
-                    content.append("p")
-			.attr("align", "left")
-			.text("Product: " + d.products.length);
+                var header = div.append("div");
+                header.append("h1")
+			     .text(firstCapital(d.Country))
+			     .append("cross")
+		         .attr("rx", 25)
+		         .attr("ry", 10)
+			     .style("fill","black")
+			     .on("click", function(){d3.selectAll("div.tooltip_country").remove();});
 
-                    content.append("p")
-			.attr("align", "left")
-			.text("Category: " + d.prodCategories.length);
+                var content = div.append("div");
+                content.append("p")
+			           .attr("align", "left")
+			           .text("Product: " + d.products.length);
+
+                content.append("p")
+			           .attr("align", "left")
+			           .text("Category: " + d.prodCategories.length);
 
     		    var svg_bis = div.append("svg")
-    			.style("width", 700 + 'px')
-    			.style("height", 500 + 'px');
+    			                 .style("width", 700 + 'px')
+    			                 .style("height", 500 + 'px');
 
 		    
     		    var nutri_bis = nutriscore(svg_bis);
