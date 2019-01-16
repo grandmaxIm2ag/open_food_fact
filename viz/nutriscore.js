@@ -9,19 +9,17 @@ function nutriscore(svg){
 
     nutri.draw = function (data_to_update, dm) {
         var width = 300 - nutri.margin.left - nutri.margin.right,
-		    height = 200 - nutri.margin.top - nutri.margin.bottom;
+	    height = 200 - nutri.margin.top - nutri.margin.bottom;
+	nutri.x.rangeRound([0, width]);
+	nutri.y.rangeRound([height, 0]);
 
-	console.log(width+" "+height);
-	    nutri.x.rangeRound([0, width]);
-	    nutri.y.rangeRound([height, 0]);
+	nutri.g.select(".axis--x_nutri")
+	    .attr("transform", "translate(0," + height + ")")
+	    .call(d3.axisBottom(nutri.x));
 
-	    nutri.g.select(".axis--x_nutri")
-		    .attr("transform", "translate(0," + height + ")")
-		    .call(d3.axisBottom(nutri.x));
-
-	    
-	    nutri.g.select(".axis--y_nutri")
-		    .call(d3.axisLeft(nutri.y));
+	
+	nutri.g.select(".axis--y_nutri")
+	    .call(d3.axisLeft(nutri.y));
         
 	// ENTER
 	nutri.g.selectAll(".bar")
@@ -50,7 +48,6 @@ function nutriscore(svg){
 		    var nutri_bis = nutriscore(svg_bis);
 		    nutri_bis.graphPosition = { top: 0, left: 0 };
 		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
-		    console.log(nutri_bis);
 		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
 		});
 		
