@@ -107,9 +107,9 @@ function country_graph(svg){
 
     		create_popup(div,500,350, function(div){
     		    var dm_bis = dm.copy();
-    		    dm.choosen_filter = dm.filter.COUNTRY;
-    		    dm.choosen_country = d.Country;
-
+    		    dm_bis.choosen_filter = dm.filter.COUNTRY;
+    		    dm_bis.choosen_country = d.Country;
+				dm_bis.choosen_region = d.Continent;
                 var header = div.append("div");
                 header.append("h1")
                     .text(firstCapital(d.Country));
@@ -125,14 +125,17 @@ function country_graph(svg){
                     .text("Category: " + d.prodCategories.length);
 
     		    var svg_bis = div.append("svg")
-    			.style("width", 350 + 'px')
+    			.style("width", 700 + 'px')
     			.style("height", 500 + 'px');
 
     		    var nutri_bis = nutriscore(svg_bis);
     		    nutri_bis.graphPosition = { top: 0, left: 0 };
     		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
 
-    		    console.log(nutri_bis);
+				var pc = piechart(svg_bis);
+		    	pc.graphPosition = { top: 500/5, left: (3*700)/4 };
+		    	pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
+		    	pc.draw_pie_chart_categories(dm_bis);
 
     		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
     		});

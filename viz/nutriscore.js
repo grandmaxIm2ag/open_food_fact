@@ -35,23 +35,23 @@ function nutriscore(svg){
 	    .attr("fill", function(d) { return color_nutriscore_grade
 					(d.grade); } )
 	    .on("mouseover", function(d) {
-		var div = d3.select("body").append("div")
-		    .attr("class", "tooltip_nutriscore")
-		    .style("opacity", 0.9);
-		create_popup(div,250,350, function(div){
-		    var dm_bis = dm.copy();
-		    dm_bis.filter_grade = true;
-		    dm_bis.choosen_grade = d.grade;
-		    var svg_bis = div.append("svg")
-			.style("width", 350 + 'px')
-			.style("height", 250 + 'px');
-		    var nutri_bis = nutriscore(svg_bis);
-		    nutri_bis.graphPosition = { top: 0, left: 0 };
-		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
-		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
-		});
+			var div = d3.select("body").append("div")
+		    	.attr("class", "tooltip_nutriscore")
+		    	.style("opacity", 0.9);
+			create_popup(div,250,350, function(div){
+		    	var dm_bis = dm.copy();
+		    	dm_bis.filter_grade = true;
+		    	dm_bis.choosen_grade = d.grade;
+		    	var svg_bis = div.append("svg")
+				.style("width", 350 + 'px')
+				.style("height", 350 + 'px');
+		    	var pc = piechart(svg_bis);
+		    	pc.graphPosition = { top: 350/2, left: 350/2 };
+		    	pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
+		    	pc.draw_pie_chart_categories(dm_bis);
+			});
 		
-            })
+        })
 	    .on("mouseout", function(d) {
 		d3.selectAll("div.tooltip_nutriscore").remove();
             });
