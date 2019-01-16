@@ -11,8 +11,18 @@
     position: absolute;
     text-align: center;
     width: 350px;
-    height: 250px;
-    background: lightsteelblue;
+    height: 350px;
+    background: white;
+    pointer-events: none;
+    margin: 30px 50px; float: left;
+    }
+    
+    div.tooltip_cat {
+    position: absolute;
+    text-align: center;
+    width: 150px;
+    height: 100px;
+    background: white;
     pointer-events: none;
     margin: 30px 50px; float: left;
     }
@@ -20,10 +30,9 @@
     div.tooltip_country {
     position: absolute;
     text-align: center;
-    width: 350px;
-    height: 500px;
-    background: lightsteelblue;
-    pointer-events: none;
+    width: 700px;
+    height: 400px;
+    background: white;
     margin: 30px 50px; float: left;
     }
   </style>
@@ -36,8 +45,10 @@
 
   
   <script src="../vendor/d3/d3.js"></script>
+  <script src="utils.js"></script>
   <script src="data_manager.js"></script>
   <script src="nutriscore.js"></script>
+  <script src="categories_piechart.js"></script>
   <script src="world_map.js"></script>
   <script src="country-graph.js"></script>
   <script src="popup.js"></script>
