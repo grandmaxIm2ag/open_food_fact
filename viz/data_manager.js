@@ -14,6 +14,7 @@ function data_manager(){
         }
         return false;
     };
+    
     dm.get_data_nutriscore = function(callback){
         var data_to_populate = [
             {grade:"a", count:0.0},
@@ -31,6 +32,7 @@ function data_manager(){
                 "d":3,
                 "e":4,
             };
+            
             for (var i = 1; i<data.length; i++){
                 
                 if(dm.accept(data[i].Continent)){
@@ -77,6 +79,38 @@ function data_manager(){
             callback(world);
         });
     };
+    
+    dm.get_data_piechart = function(callback){
+    	
+    	var chosenFilter = "northAmerica";
+    	
+	
+    	d3.tsv("../tsv/hypotesis.tsv", function(error, data) {
+    		if(error) throw error;
+
+			function countBy(collection, col) {
+				var object = Object.create(null);
+				var arr = [];
+				var a=0;
+				collection.forEach(function(e) {
+					k = e[col];
+					if (k in object) { arr[object[k]].value++; }
+					else {
+						object[k] = a++;
+						arr.push({key:k, value:1});
+					}
+				});
+				return arr;
+			}
+			
+			var filtData = [] = data.filter(entry => dm.accept(entry.Continent));		// Filtering
+			var countData = countBy(filtData, 'Categorie');								// Counting the number of products for each category
+			countData.sort(function(a, b){return b.value-a.value});
+			callback (countData);
+		});
+    
+	}
+    
     return dm;
 }
 
@@ -102,3 +136,4 @@ function color_continent(continent){
     case 'southAmerica': return d3.rgb(0,0,0);
     };
 }
+
