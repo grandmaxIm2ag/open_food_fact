@@ -1,0 +1,134 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{adjustbox}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{color, colortbl}
+\usepackage{commath}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tikz}
+\usepackage{pgffor}
+\usepackage{enumitem}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\usepackage[lined]{algorithm2e}
+\usetheme{Singapore}
+\newlength{\mylen}
+\resetcounteronoverlays{compt}
+\addtobeamertemplate{navigation symbols}{}{%
+    \usebeamerfont{footline}%
+    \usebeamercolor[fg]{footline}%
+    \hspace{1em}%
+    \insertframenumber/\inserttotalframenumber
+}
+\usepackage{upgreek}
+\usepackage[doi=false,
+            isbn=false,
+            url=false,
+            bibstyle=authoryear,
+            style=authoryear]{biblatex}
+%\bibliography{biblio}%
+\renewcommand{\footfullcite}[1]{\footnote[frame]{\fullcite{#1}}}
+\def\bibfont{\tiny}%
+\begin{document}
+
+\AtBeginSection[]{
+  \begin{frame}{Outline}
+  \small \tableofcontents[currentsection, hideothersubsections]
+  \end{frame} 
+}
+
+\title{Open Food Facts project}
+\author{ } 
+\institute{ M2 Mosig - Information Visualization}
+\date{january 25th 2019}
+
+\maketitle
+
+\section{Introduction}
+
+\begin{frame}
+\frametitle{Introduction}
+\end{frame}
+
+\section{Hypothesis}
+
+\begin{frame}
+\frametitle{Hypothesis}
+\end{frame}
+
+\section{Design}
+
+\begin{frame}
+\frametitle{Design - World Map}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
+\hline
+Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
+\hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Design - Nutriscore Bar Chart}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
+\hline
+Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
+\hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Design - Categories Pie Chart}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
+\hline
+Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
+\hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Design - Country Chart}
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
+\hline
+Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
+\hline
+\end{tabular}
+\end{table}
+
+\end{frame}
+
+\section{Interaction}
+
+\begin{frame}
+\frametitle{Inteeraction}
+\end{frame}
+
+
+\begin{frame}
+Thank you for your attention.\\
+Any question ?
+\end{frame}
+\end{document}
