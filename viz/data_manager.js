@@ -159,7 +159,7 @@ function color_continent(continent){
     case 'europe': return d3.rgb( 52, 152, 219 );
     case 'northAmerica': return d3.rgb( 69, 179, 157 );
     case 'oceania': return d3.rgb(45, 176, 65);
-    case 'southAmerica': return d3.rgb(0,0,0);
+    case 'southAmerica': return d3.rgb(165,42,42);
     };
 }
 

@@ -43,7 +43,7 @@
   \end{frame} 
 }
 
-\title{Open Food Facts project}
+\title{Open Food Facts Project}
 \author{ } 
 \institute{ M2 Mosig - Information Visualization}
 \date{january 25th 2019}
@@ -60,6 +60,12 @@
 
 \begin{frame}
 \frametitle{Hypothesis}
+\begin{itemize}[label=$\square$]
+    \item Which countries produce the most or least products ?\pause 
+    \item Which nutriscore grade have the most or least product ?\pause
+    \item What kinds of product each country focus mainly on ?\pause
+    \item Which country has the best or worst nutri score ?
+\end{itemize}
 \end{frame}
 
 \section{Design}
@@ -67,68 +73,132 @@
 \begin{frame}
 \frametitle{Design - World Map}
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
-\hline
-Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
-\hline
-\end{tabular}
-\end{table}
-
+\begin{columns}[T]
+  \begin{column}{.7\textwidth}
+    \begin{table}
+      \resizebox{1.0\textwidth}{!}{
+        \centering
+        \begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
+          \hline
+          Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
+          \hline\hline
+          Continent & N & f & & A & A  & Z &  & C,V &  &  & \\
+          \hline
+        \end{tabular}
+      }
+    \end{table}
+  \end{column}
+  \begin{column}{.25\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[scale=0.3]{img/map.png} \\
+      \includegraphics[scale=0.3]{img/map_selected.png}
+    \end{figure}
+  \end{column}
+\end{columns}
+\begin{itemize}
+\item Choice of color : 
+\item Rectangular projection : Most used projection  
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Design - Nutriscore Bar Chart}
-
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
-\hline
-Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
-\hline
-\end{tabular}
-\end{table}
-
+\begin{columns}[T]
+  \begin{column}{.7\textwidth}
+    \begin{table}
+      \resizebox{1.0\textwidth}{!}{
+        \centering
+      \begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
+        \hline
+        Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
+        \hline\hline
+        Grade & O & > &  & A &  & &  & C & &  & \\
+        \hline
+        Number of product & Q & > &  &  & A &  &  & S &  &  & \\
+        \hline
+      \end{tabular}
+    }
+    \end{table}
+  \end{column}
+  \begin{column}{.25\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[scale=0.3]{img/nutriscore.png}
+    \end{figure}
+  \end{column}
+\end{columns}
+\begin{itemize}
+\item Choice of color : color used for nutriscore
+\includegraphics[scale=0.2]{img/nutri-score.jpg} 
+\end{itemize}
 \end{frame}
 
 \begin{frame}
 \frametitle{Design - Categories Pie Chart}
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
-\hline
-Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
-\hline
-\end{tabular}
-\end{table}
-
+\begin{columns}[T]
+  \begin{column}{.7\textwidth}
+    \begin{table}
+      \resizebox{1.0\textwidth}{!}{
+        \centering
+      \begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
+        \hline
+        Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
+        \hline\hline
+        Categorie & N & f &  & A & A &  &  & T &  &  & \\
+        \hline
+        Number of product  & N & f &  & A & A &  &  & S,V &  &  & \\
+        \hline
+      \end{tabular}
+    }
+    \end{table}
+  \end{column}
+  \begin{column}{.25\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[scale=0.3]{img/piechart.png}
+    \end{figure}
+  \end{column}
+\end{columns}
 \end{frame}
 
 \begin{frame}
 \frametitle{Design - Country Chart}
 
-\begin{table}
-\centering
-\begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
-\hline
-Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
-\hline
-\end{tabular}
-\end{table}
-
+\begin{columns}[T]
+  \begin{column}{.7\textwidth}
+    \begin{table}
+      \resizebox{1.0\textwidth}{!}{
+        \centering
+      \begin{tabular}{|c|c|c|c||c|c|c|c|c|c|c||c|}
+        \hline
+        Name & D & F & D' & X & Y & Z & T & R & \_ & [] & CP\\
+        \hline\hline
+        Country & N & f &  & P  &  P &  &  & T &  &  & \\
+        \hline
+        Continent & N & f &  &  &  &  &  & C &  &  & \\
+        \hline
+        Number of products & Q & > &  &P  &  &  &  & &  &  & \\
+        \hline
+        Number of categories & Q & > &  &  &P  &  &  & &  &  & \\
+        \hline
+        Proportion of grade A products & Q & > &  &  &  &  &  & S &  &  & \\
+        \hline
+      \end{tabular}
+    }
+    \end{table}
+  \end{column}
+  \begin{column}{.25\textwidth}
+    \begin{figure}
+      \centering
+      \includegraphics[scale=0.1]{img/country.png}
+    \end{figure}
+  \end{column}
+\end{columns}
+\begin{itemize}
+\item Log Scale for X Axis : Smooth curve 
+\end{itemize}
 \end{frame}
 
-\section{Interaction}
-
-\begin{frame}
-\frametitle{Inteeraction}
-\end{frame}
-
-
-\begin{frame}
-Thank you for your attention.\\
-Any question ?
-\end{frame}
 \end{document}
