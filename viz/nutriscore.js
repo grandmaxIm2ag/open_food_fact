@@ -1,11 +1,12 @@
 function nutriscore(svg){ 
     var nutri = {};
+    nutri.block_popup = false;
     nutri.graphPosition = { top: 190, left: 800 };
     
     nutri.svg = svg;
-	nutri.margin = { top: 20, right: 20, bottom: 30, left: 40 };
-	nutri.x = d3.scaleBand().padding(0.1);
-	nutri.y = d3.scaleLinear();
+    nutri.margin = { top: 20, right: 20, bottom: 30, left: 40 };
+    nutri.x = d3.scaleBand().padding(0.1);
+    nutri.y = d3.scaleLinear();
 
     nutri.draw = function (data_to_update, dm) {
         var width = 300 - nutri.margin.left - nutri.margin.right,
@@ -35,23 +36,26 @@ function nutriscore(svg){
 	    .attr("fill", function(d) { return color_nutriscore_grade
 					(d.grade); } )
 	    .on("mouseover", function(d) {
-			var div = d3.select("body").append("div")
-		    	.attr("class", "tooltip_nutriscore")
-		    	.style("opacity", 0.9);
-			create_popup(div,250,350, function(div){
-		    	var dm_bis = dm.copy();
-		    	dm_bis.filter_grade = true;
-		    	dm_bis.choosen_grade = d.grade;
-		    	var svg_bis = div.append("svg")
-				.style("width", 350 + 'px')
-				.style("height", 350 + 'px');
-		    	var pc = piechart(svg_bis);
-		    	pc.graphPosition = { top: 350/2, left: 350/2 };
-		    	pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
-		    	pc.draw_pie_chart_categories(dm_bis);
-			});
+		if(nutri.block_popup){
+		    return;
+		}
+		var div = d3.select("body").append("div")
+		    .attr("class", "tooltip_nutriscore")
+		    .style("opacity", 0.9);
+		create_popup(div,250,350, function(div){
+		    var dm_bis = dm.copy();
+		    dm_bis.filter_grade = true;
+		    dm_bis.choosen_grade = d.grade;
+		    var svg_bis = div.append("svg")
+			.style("width", 350 + 'px')
+			.style("height", 350 + 'px');
+		    var pc = piechart(svg_bis);
+		    pc.graphPosition = { top: 350/2, left: 350/2 };
+		    pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
+		    pc.draw_pie_chart_categories(dm_bis);
+		});
 		
-        })
+            })
 	    .on("mouseout", function(d) {
 		d3.selectAll("div.tooltip_nutriscore").remove();
             });
@@ -61,21 +65,21 @@ function nutriscore(svg){
         nutri.svg.selectAll(".bar").remove();
         nutri.svg.selectAll(".axis--y_nutri").remove();
         nutri.g = nutri.svg.append("g")
-	        .attr("transform", "translate(" + (nutri.graphPosition.left
+	    .attr("transform", "translate(" + (nutri.graphPosition.left
                                                + nutri.margin.left) +
                   "," + (nutri.graphPosition.top + nutri.margin.top)
                   + ")");
         nutri.g.append("g")
-	        .attr("class", "axis axis--x_nutri");
+	    .attr("class", "axis axis--x_nutri");
 
         nutri.g.append("g")
-	        .attr("class", "axis axis--y_nutri");
+	    .attr("class", "axis axis--y_nutri");
 
         nutri.g.append("text")
-	        .attr("transform", "rotate(-90)")
-	        .attr("y", 6)
-	        .attr("dy", "0.71em")
-	        .attr("text-anchor", "end");
+	    .attr("transform", "rotate(-90)")
+	    .attr("y", 6)
+	    .attr("dy", "0.71em")
+	    .attr("text-anchor", "end");
         
         dm.get_data_nutriscore(function(data) {
             nutri.x.domain(data.map(function (d) { return d.grade; }));

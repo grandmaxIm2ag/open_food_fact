@@ -144,7 +144,7 @@ function country_graph(svg){
     		    var nutri_bis = nutriscore(svg_bis);
     		    nutri_bis.graphPosition = { top: 0, left: 0 };
     		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
-
+		    nutri_bis.block_popup = true;
 		    var pc = piechart(svg_bis);
 		    pc.graphPosition = { top: 500/5, left: (3*700)/4 };
 		    pc.margin = { top: 0, right: 0, bottom: 0, left: 0};

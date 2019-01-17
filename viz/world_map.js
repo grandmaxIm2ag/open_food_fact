@@ -60,13 +60,16 @@ function worldmap(obs, svg){
     }
 
     worldmap.notify = function(dm){
-	dm.get_data_map(function(world) {
-            worldmap.draw(world, dm);
-	});
+	//dm.get_data_map(function(world) {
+        worldmap.draw(worldmap.world, dm);
+	//});
     }
 
     worldmap.draw_worldmap = function(dm){
-	worldmap.notify(dm);
+	dm.get_data_map(function(world) {
+	    worldmap.world = world;
+	    worldmap.notify(dm);
+	});
     }
     worldmap.notifyAll = function(obs, dm) {
 	obs.forEach(function(o){

@@ -62,32 +62,32 @@ function data_manager(){
     };
 
     dm.get_data_country_graph = function(callback)  {
-	    d3.tsv("../tsv/hypotesis.tsv", function(error, data) {
-		    if(error) throw error;
+	d3.tsv("../tsv/hypotesis.tsv", function(error, data) {
+	    if(error) throw error;
 
-		    var products = data;
+	    var products = data;
             
-		    var countries = products.map(function(o) { return o.Country; });
-		    countries = Array.from(new Set(countries));
+	    var countries = products.map(function(o) { return o.Country; });
+	    countries = Array.from(new Set(countries));
 
             
-		    var targetCountries = [];
-		    for (var i = 0; i < countries.length; i++) {
-			    var countryName = countries[i];
+	    var targetCountries = [];
+	    for (var i = 0; i < countries.length; i++) {
+		var countryName = countries[i];
 
-			    var countryProds = products.filter(o => o.Country.toLowerCase() === countryName.toLowerCase());
+		var countryProds = products.filter(o => o.Country.toLowerCase() === countryName.toLowerCase());
 
-			    var prodCategories = countryProds.map(function(o) { return o.Categorie; });
-			    prodCategories = Array.from(new Set(prodCategories));
+		var prodCategories = countryProds.map(function(o) { return o.Categorie; });
+		prodCategories = Array.from(new Set(prodCategories));
 
-			    var country = {};
-			    country.Country = countryName;
-			    country.products = countryProds;
-			    country.prodCategories = prodCategories;
+		var country = {};
+		country.Country = countryName;
+		country.products = countryProds;
+		country.prodCategories = prodCategories;
                 targetCountries.push(country);
-		    }
+	    }
             callback(targetCountries);
-	    });
+	});
     };
     
     dm.get_data_map = function(callback){
@@ -102,31 +102,31 @@ function data_manager(){
     	
 	
     	d3.tsv("../tsv/hypotesis.tsv", function(error, data) {
-    		if(error) throw error;
+    	    if(error) throw error;
 
-			function countBy(collection, col) {
-				var object = Object.create(null);
-				var arr = [];
-				var a=0;
-				collection.forEach(function(e) {
-					k = e[col];
-					if (k in object) { arr[object[k]].value++; }
-					else {
-						object[k] = a++;
-						arr.push({key:k, value:1});
-					}
-				});
-				return arr;
-			}
-			
-			var filtData = [] = data.filter(entry => dm.accept(entry));		// Filtering
-			var countData = countBy(filtData, 'Categorie');								// Counting the number of products for each category
-			countData.sort(function(a, b){return b.value-a.value});
-			callback (countData);
+	    function countBy(collection, col) {
+		var object = Object.create(null);
+		var arr = [];
+		var a=0;
+		collection.forEach(function(e) {
+		    k = e[col];
+		    if (k in object) { arr[object[k]].value++; }
+		    else {
+			object[k] = a++;
+			arr.push({key:k, value:1});
+		    }
 		});
-    
-	}
+		return arr;
+	    }
+	    
+	    var filtData = [] = data.filter(entry => dm.accept(entry));		// Filtering
+	    var countData = countBy(filtData, 'Categorie');								// Counting the number of products for each category
+	    countData.sort(function(a, b){return b.value-a.value});
+	    callback (countData);
+	});
 	
+    }
+    
     dm.copy = function(){
 	var other = data_manager();
 	other.filter_grade=dm.filter_grade;
