@@ -31,3 +31,9 @@
 .close:after {
   transform: rotate(-45deg);
 }
+
+.tb-country {
+    width: 80%;
+    text-align: left;
+    margin: 10px 10px 20px 20px;
+  }

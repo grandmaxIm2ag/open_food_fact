@@ -79,9 +79,10 @@ function country_graph(svg){
    	    .enter()
     	    .append("circle")
     	    .attr("r", function(d) { 
+
 	    	var nbNutriA = d.products.filter(
                     o => "a" == o.grade.toLowerCase()).length;
-	   	var propNutriA = nbNutriA / d.products.length;
+	   	var propNutriA = (nbNutriA / d.products.length).toFixed(2);
 	    	return count_graph.cellMaxSize * propNutriA;
 	    })
 	    .attr("cx", function(d) { return x(d.products.length); })
@@ -127,14 +128,35 @@ function country_graph(svg){
 			     .style("fill","black")
 			     .on("click", function(){d3.selectAll("div.tooltip_country").remove();});
 
-                var content = div.append("div");
-                content.append("p")
-			           .attr("align", "left")
-			           .text("Product: " + d.products.length);
+                var table = div.append("table")
+                                .attr("class", "tb-country")
+                                .attr("align", "left");
 
-                content.append("p")
-			           .attr("align", "left")
-			           .text("Category: " + d.prodCategories.length);
+                var trhead = table.append("thead")
+                                    .append("tr");
+
+                trhead.append("th").attr("width", "15%");
+                trhead.append("th").attr("width", "20%");
+                trhead.append("th").attr("width", "20%");
+                trhead.append("th").attr("width", "30%");
+
+                var tbody = table.append("tbody");
+
+                var row1 = tbody.append("tr");
+                row1.append("td").text("Continent:");
+                row1.append("td").text(firstCapital(d.Continent));
+                row1.append("td").text("Nutri-score A:");
+
+                var nbNutriA = d.products.filter(o => "a" == o.grade.toLowerCase()).length;
+                var propNutriA = ((nbNutriA / d.products.length) * 100).toFixed(2);
+
+                row1.append("td").text(propNutriA + "%");
+
+                var row2 = tbody.append("tr");
+                row2.append("td").text("Products:");
+                row2.append("td").text(d.products.length);
+                row2.append("td").text("Categories:");
+                row2.append("td").text(d.prodCategories.length);                
 
     		    var svg_bis = div.append("svg")
     			                 .style("width", 700 + 'px')

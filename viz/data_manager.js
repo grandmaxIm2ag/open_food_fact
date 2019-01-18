@@ -76,15 +76,19 @@ function data_manager(){
 		var countryName = countries[i];
 
 		var countryProds = products.filter(o => o.Country.toLowerCase() === countryName.toLowerCase());
+        
 
 		var prodCategories = countryProds.map(function(o) { return o.Categorie; });
 		prodCategories = Array.from(new Set(prodCategories));
 
-		var country = {};
+        var country = {};
+
 		country.Country = countryName;
 		country.products = countryProds;
 		country.prodCategories = prodCategories;
-                targetCountries.push(country);
+        
+        targetCountries.push(country);
+
 	    }
             callback(targetCountries);
 	});
