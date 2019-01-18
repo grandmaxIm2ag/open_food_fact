@@ -49,6 +49,9 @@ function worldmap(obs, svg){
 		if(dm.choosen_filter == dm.filter.CONTINENT && dm.choosen_region
 		   == d.properties.continent){
 		    dm.choosen_filter = dm.filter.WORLD;
+		}else if(dm.choosen_filter == dm.filter.CONTINENT){
+		    dm.choosen_filter = dm.filter.CONTINENT;
+                    dm.choosen_region = d.properties.continent;
 		}else{
                     dm.choosen_filter = dm.filter.CONTINENT;
                     dm.choosen_region = d.properties.continent;
