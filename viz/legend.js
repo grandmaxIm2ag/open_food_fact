@@ -5,8 +5,8 @@ function legendCircles(svg){
 	legend.graphPosition = { top: 100, left: 100 };
 	
 	legend.circleMaxSize = 100;				// = count_graph.cellMaxSize = How big is 100%
-	legend.circleMaxPerc = 40;				// What max % will be displayed
-	legend.circleNb = 4;
+	legend.circleMaxPerc = 25;				// What max % will be displayed
+	legend.circleNb = 5;
 	var ratio = legend.circleMaxSize/100;
 	var radiusMax = legend.circleMaxPerc*ratio;
 	
@@ -61,16 +61,17 @@ function legendCircles(svg){
 			.attr("x2", function(d){ return d.cx + radiusMax + 25; })
 			.attr("y2", function(d){ return d.cy - d.radius; })
 			.style("stroke-dasharray", "10,3")
+			.style("stroke-width", 1)
 			.style("stroke", "black");
 			
 		elem.append("text")
 			.text(function(d){ return d.perc + "%"; })
 			.attr("x", function(d){ return d.cx + radiusMax + 25; })
 			.attr("y", function(d){ return d.cy - d.radius + 6; })
-			.attr("font-size", "12px");
+			.attr("font-size", "10px");
 	
 	var ck = -1;
-	var colors = [ "none", "lightgrey", "lightblue", "blue"];
+	var colors = ["none", "lightgrey", "lightblue", "blue"];
 	function colorUpdate(callback){ 
 		colorTable.forEach(function(d2,j,data){ 
 			callback(j,data); 
@@ -94,8 +95,31 @@ function legendCircles(svg){
 			.on("mouseout", function(d,i){
 				colorUpdate(function(j,data){ if(j>=i) data[j]--; });
 			})
-			.on("click", function(d,i){
+/*			.on("click", function(d,i){
 				colorUpdate(function(j,data){ data[j] = (j<i ? 0 : i==ck ? 1 : 3); });
+				var a = d3.select("#c"+i);
+				d3.selectAll(".country-dot").each(function(d2,j,data){
+					var b = d3.select(this);
+					b.attr("opacity", (b.attr("r") <= a.attr("r") || i==ck ? 1 : 0.3));
+					console.log(a.attr("r"));
+				});
+				ck = (i==ck ? -1 : i);
+			});
+*/			.on("click", function(d,i){
+				var a = d3.select("#c"+i);
+				if(i==ck){
+					colorUpdate(function(j,data){ data[j] = (j<i ? 0 : 1); });
+					d3.selectAll(".country-dot").each(function(d2){
+						d3.select(this).attr("opacity", 1);
+					});
+				} 
+				else {
+					colorUpdate(function(j,data){ data[j] = (j<i ? 0 : 3); });
+					d3.selectAll(".country-dot").each(function(d2){
+						var b = d3.select(this);
+						b.attr("opacity", (b.attr("r") <= a.attr("r") ? 1 : 0.3));
+					});
+				} 
 				ck = (i==ck ? -1 : i);
 			});
 	
@@ -106,11 +130,11 @@ function legendCircles(svg){
 				.attr("r", circleRadius)
 				.attr("cx", centerX)
 				.attr("cy", legend.height-legend.margin.bottom - circleRadius)
-				.style("stroke", "yellow")
+				.style("stroke", "red")
+				.style("stroke-width", 2)
 				.style("fill", function(d,i){ colorTable[i]=0; return "none"; });
 		}
 		else g.selectAll("#hover").remove();
-		console.log("Test");
 	}
 	
 	return legend;
