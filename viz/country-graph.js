@@ -108,7 +108,7 @@ function country_graph(legend, svg){
                         .style("padding", '10px')
             		    .style("opacity", 1);
 
-        		create_popup(div,900,350, function(div){
+        		create_popup(div,800,350, function(div){
         		    var dm_bis = dm.copy();
         		    dm_bis.choosen_filter = dm.filter.COUNTRY;
         		    dm_bis.choosen_country = d.Country;
@@ -164,36 +164,36 @@ function country_graph(legend, svg){
                     row2.append("td").text(d.prodCategories.length);                
 
         		    var svg_bis = div.append("svg")
-        			                 .style("width", 900 + 'px')
+        			                 .style("width", 800 + 'px')
         			                 .style("height", 220 + 'px');
 
 		        
         		    var nutri_bis = nutriscore(svg_bis);
-        		    nutri_bis.graphPosition = { top: 0, left: 30 };
+        		    nutri_bis.graphPosition = { top: 0, left: 40 };
         		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
 		            nutri_bis.block_popup = true;
 		            var pc = piechart(svg_bis);
-		            pc.graphPosition = { top: 500/5, left: (3*600)/4 };
+		            pc.graphPosition = { top: 500/5, left: (3*600)/4 + 10 };
 		            pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
 		            pc.draw_pie_chart_categories(dm_bis);
 
         		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
 
-                    var table = div.append("table")
-                                    .attr("class", "no-margin width-full")
-                                    .attr("align", "left");
+                    // var table = div.append("table")
+                    //                 .attr("class", "no-margin width-full")
+                    //                 .attr("align", "left");
 
-                    var trhead = table.append("thead")
-                                        .append("tr");
+                    // var trhead = table.append("thead")
+                    //                     .append("tr");
 
-                    trhead.append("th").attr("width", "50%");
-                    trhead.append("th").attr("width", "50%");
+                    // trhead.append("th").attr("width", "50%");
+                    // trhead.append("th").attr("width", "50%");
 
-                    var tbody = table.append("tbody");
+                    // var tbody = table.append("tbody");
 
-                    var row1 = tbody.append("tr");
-                    row1.append("td").text("Nutri-score");
-                    row1.append("td").text("Main categories");
+                    // var row1 = tbody.append("tr");
+                    // row1.append("td").text("Nutri-score");
+                    // row1.append("td").text("Main categories");
 
         		});
 	        }
