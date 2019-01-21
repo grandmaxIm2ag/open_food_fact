@@ -18,15 +18,14 @@ function worldmap(obs, svg){
         .attr("id", "svg")
         .attr("width", width)
         .attr("height", height)
-        .style("background-color", 'red')
         .attr("transform", "translate(" +
               (graphPosition.left +margin.left) + "," +
               (graphPosition.top + margin.top) + ")");
     
     worldmap.draw = function (world, dm){
-        worldmap.svg.append("g")
-            .attr("class", "continent")
+        worldmap.svg
             .selectAll("path")
+            .attr("class", "continent")
             .data(world.features)
 	    .enter()
 	    .append("path")
@@ -37,12 +36,12 @@ function worldmap(obs, svg){
 	            }else if (dm.choosen_filter == dm.filter.CONTINENT){
 		            return 1.0;
 	            }else{
-		            return 0.7;
+		        return 0.7;
 	            }
-		    })
-		      
-	        .style("fill", function(d) { return color_continent
-                                             (d.properties.continent); })
+		})
+	
+	    .style("fill", function(d) { return color_continent
+                                         (d.properties.continent); })
             .style("stroke", "none")
             .attr("d", worldmap.path)
             .on("mouseover", function(d){
@@ -52,18 +51,18 @@ function worldmap(obs, svg){
                 d3.select(this).style("stroke", "none");
             })
             .on("click", function(d){
-				if(dm.choosen_filter == dm.filter.CONTINENT && dm.choosen_region
-				   == d.properties.continent){
-					dm.choosen_filter = dm.filter.WORLD;
-				}else if(dm.choosen_filter == dm.filter.CONTINENT){
-					dm.choosen_filter = dm.filter.CONTINENT;
-				            dm.choosen_region = d.properties.continent;
-				}else{
-				            dm.choosen_filter = dm.filter.CONTINENT;
-				            dm.choosen_region = d.properties.continent;
-				}
-				worldmap.svg.selectAll("path").remove();
-				worldmap.notifyAll(worldmap.obs, dm);
+		if(dm.choosen_filter == dm.filter.CONTINENT && dm.choosen_region
+		   == d.properties.continent){
+		    dm.choosen_filter = dm.filter.WORLD;
+		}else if(dm.choosen_filter == dm.filter.CONTINENT){
+		    dm.choosen_filter = dm.filter.CONTINENT;
+		    dm.choosen_region = d.properties.continent;
+		}else{
+		    dm.choosen_filter = dm.filter.CONTINENT;
+		    dm.choosen_region = d.properties.continent;
+		}
+		worldmap.svg.selectAll("path").remove();
+		worldmap.notifyAll(worldmap.obs, dm);
             })
 	return worldmap.svg;
     }

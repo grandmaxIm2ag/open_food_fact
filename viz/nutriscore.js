@@ -29,33 +29,34 @@ function nutriscore(svg){
             .attr("class", "bar")
 	    .attr("x", function (d) { return nutri.x(d.grade); })
 	    .attr("y", function (d) {
-		    return nutri.y(d.count); })
+		return nutri.y(d.count); })
 	    .attr("width", nutri.x.bandwidth())
 	    .attr("height", function (d) { return height -
                                            nutri.y(d.count); })
 	    .attr("fill", function(d) { return color_nutriscore_grade
-					(d.grade); } )
-	    .on("mouseover", function(d) {
-		    if(nutri.block_popup){
-		        return;
-		    }
-		    var div = d3.select("body").append("div")
-		        .attr("class", "tooltip_nutriscore")
-		        .style("opacity", 0.9);
-		        create_popup(div,250,350, function(div){
-		            var dm_bis = dm.copy();
-		            dm_bis.filter_grade = true;
-		            dm_bis.choosen_grade = d.grade;
-		            var svg_bis = div.append("svg")
-			        .style("width", 350 + 'px')
-			        .style("height", 350 + 'px');
-		            var pc = piechart(svg_bis);
-		            pc.graphPosition = { top: 350/2, left: 350/2 };
-		            pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
-		            pc.draw_pie_chart_categories(dm_bis);
-		        });
-		
-            })
+					(d.grade); } );
+	
+	nutri.g.selectAll(".bar").on("mouseover", function(d) {
+	    if(nutri.block_popup){
+		return;
+	    }
+	    var div = d3.select("body").append("div")
+		.attr("class", "tooltip_nutriscore")
+		.style("opacity", 0.9);
+	    create_popup(div,250,350, function(div){
+		var dm_bis = dm.copy();
+		dm_bis.filter_grade = true;
+		dm_bis.choosen_grade = d.grade;
+		var svg_bis = div.append("svg")
+		    .style("width", 550 + 'px')
+		    .style("height", 250 + 'px');
+		var pc = piechart(svg_bis);
+		pc.graphPosition = { top: 250/2, left: 350/3 };
+		pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
+		pc.draw_pie_chart_categories(dm_bis);
+	    });
+	    
+        })
 	    .on("mouseout", function(d) {
 		d3.selectAll("div.tooltip_nutriscore").remove();
             });
@@ -65,21 +66,36 @@ function nutriscore(svg){
         nutri.svg.select(".barchart").remove();
         nutri.g = nutri.svg.append("g")
             .attr("class", "barchart")
-	        .attr("transform", "translate(" + (nutri.graphPosition.left
-                                                   + nutri.margin.left) +
-                      "," + (nutri.graphPosition.top + nutri.margin.top)
-                      + ")");
+	    .attr("transform", "translate(" + (nutri.graphPosition.left
+                                               + nutri.margin.left) +
+                  "," + (nutri.graphPosition.top + nutri.margin.top)
+                  + ")");
         nutri.g.append("g")
-	        .attr("class", "axis axis--x_nutri");
+	    .attr("class", "axis axis--x_nutri");
+
+	nutri.g.append("text")             
+            .attr("transform",
+                  "translate(" + ((300 - nutri.margin.left - nutri.margin.right) / 2) + " ," + 
+                  (200 -20) + ")")
+            .style("text-anchor", "middle")
+            .text("Nutriscore Grade");
 
         nutri.g.append("g")
     	    .attr("class", "axis axis--y_nutri");
 
+	nutri.g.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 0 - (nutri.margin.left +20))
+            .attr("x",0 - ((200 - nutri.margin.bottom) / 2))
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Products");
+	
         nutri.g.append("text")
-	        .attr("transform", "rotate(-90)")
-	        .attr("y", 6)
-	        .attr("dy", "0.71em")
-	        .attr("text-anchor", "end");
+	    .attr("transform", "rotate(-90)")
+	    .attr("y", 6)
+	    .attr("dy", "0.71em")
+	    .attr("text-anchor", "end");
         
         dm.get_data_nutriscore(function(data) {
             nutri.x.domain(data.map(function (d) { return d.grade; }));
