@@ -1,9 +1,7 @@
 function piechart(svg){
-	console.log("test0");	
+
 	var pc = {};
 
-	
-	
 	pc.sumValue = function (collection) {
 		return collection.reduce(function(tot,cur){return tot+cur.value;},0);
 	};
@@ -14,11 +12,8 @@ function piechart(svg){
 	pc.width = 400 - pc.margin.left - pc.margin.right;
 	pc.height = 300 - pc.margin.top - pc.margin.bottom;
 	
-	console.log("test01");
 	pc.svg = svg;
 	
-	
-			
 	var arc = d3.arc()
 	    .outerRadius(pc.radius)
 	    .innerRadius(0);
@@ -26,8 +21,7 @@ function piechart(svg){
 	var pie = d3.pie()
 	    .value(function(d) { return d.value; })
 	    .sort(null);
-		    
-	console.log("test1");
+	    
 	pc.draw = function(countData, dm){
 		
 		pc.colorShades = function (i, threshold) {
@@ -37,9 +31,9 @@ function piechart(svg){
 			c.opacity = 1.0 - (i / threshold);
 			return c;
 		};	
+		
 		var thresh = 10;
 		var data_to_use = countData.slice(0, thresh);
-		console.log(pie(data_to_use));
 		data_to_use.push({ key:"others", value:pc.sumValue(countData)-pc.sumValue(data_to_use) });
 	
 		var threshold = (thresh > data_to_use.length) ? data_to_use.length - 2 : thresh; 
@@ -51,9 +45,9 @@ function piechart(svg){
 			.attr('fill', function(d, i) { return pc.colorShades(i, threshold); })
 			.append("svg:title").text(function(d) {return  d.data.key+"\n"+d.data.value; });
 	};
-	console.log("test2");
+	
 	pc.notify = function(dm){
-	pc.g = pc.svg.append("g")
+		pc.g = pc.svg.append("g")
 			.attr("transform", "translate(" + (pc.graphPosition.left
                                                + pc.margin.left) +
                   "," + (pc.graphPosition.top + pc.margin.top)
@@ -64,11 +58,11 @@ function piechart(svg){
 			return pc.draw(data, dm);
 		});
 	};
-	console.log("test3");
+	
 	pc.draw_pie_chart_categories = function(dm){
 		pc.notify(dm);
 	};
-	console.log(pc);	
+		
 	return pc;
 }
 

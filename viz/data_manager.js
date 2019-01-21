@@ -1,9 +1,9 @@
 function data_manager(){
     var dm = {};
     dm.filter = {
-	WORLD:0,
-	CONTINENT:1,
-	COUNTRY:2
+		WORLD:0,
+		CONTINENT:1,
+		COUNTRY:2
     };
     dm.filter_grade = false;
     dm.choosen_filter = dm.filter.WORLD;
@@ -12,21 +12,21 @@ function data_manager(){
     dm.choosen_grade = "A";
     dm.accept = function(value){
 	var b = true;
-	switch(dm.choosen_filter){
-        case dm.filter.WORLD:
-	    b = b & true;
-	    break;
-        case dm.filter.COUNTRY:
-            b = b & (value.Country == dm.choosen_country); 
-	    break;
-	case dm.filter.CONTINENT:
-            b = b & (value.Continent == dm.choosen_region); 
-	    break;
-	}
-	
-	if(dm.filter_grade){
-	    b = b & (value.grade == dm.choosen_grade); 
-	}
+		switch(dm.choosen_filter){
+		    case dm.filter.WORLD:
+			b = b & true;
+			break;
+		    case dm.filter.COUNTRY:
+		        b = b & (value.Country == dm.choosen_country); 
+			break;
+			case dm.filter.CONTINENT:
+		        b = b & (value.Continent == dm.choosen_region); 
+			break;
+		}
+		
+		if(dm.filter_grade){
+			b = b & (value.grade == dm.choosen_grade); 
+		}
 	
         return b;
     };

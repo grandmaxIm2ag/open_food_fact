@@ -30,34 +30,40 @@ function worldmap(obs, svg){
             .data(world.features)
 	    .enter()
 	    .append("path")
-	    .style("opacity",
-		   function(d){
-		       if(dm.choosen_filter == dm.filter.CONTINENT &&
-			  dm.choosen_region != d.properties.continent){
-			   return 0.2;
-		       }else if (dm.choosen_filter == dm.filter.CONTINENT){
-			   return 1.0;
-		       }else{
-			   return 0.7;
-		       }
-		   }
-		  )
-	    .style("fill", function(d) { return color_continent
-                                         (d.properties.continent); })
+	        .style("opacity", function(d){
+	            if(dm.choosen_filter == dm.filter.CONTINENT &&
+		           dm.choosen_region != d.properties.continent){
+		            return 0.2;
+	            }else if (dm.choosen_filter == dm.filter.CONTINENT){
+		            return 1.0;
+	            }else{
+		            return 0.7;
+	            }
+		    })
+		      
+	        .style("fill", function(d) { return color_continent
+                                             (d.properties.continent); })
+            .style("stroke", "none")
             .attr("d", worldmap.path)
+            .on("mouseover", function(d){
+                d3.select(this).style("stroke", "black");
+            })
+            .on("mouseout", function(d){
+                d3.select(this).style("stroke", "none");
+            })
             .on("click", function(d){
-		if(dm.choosen_filter == dm.filter.CONTINENT && dm.choosen_region
-		   == d.properties.continent){
-		    dm.choosen_filter = dm.filter.WORLD;
-		}else if(dm.choosen_filter == dm.filter.CONTINENT){
-		    dm.choosen_filter = dm.filter.CONTINENT;
-                    dm.choosen_region = d.properties.continent;
-		}else{
-                    dm.choosen_filter = dm.filter.CONTINENT;
-                    dm.choosen_region = d.properties.continent;
-		}
-		worldmap.svg.selectAll("path").remove();
-		worldmap.notifyAll(worldmap.obs, dm);
+				if(dm.choosen_filter == dm.filter.CONTINENT && dm.choosen_region
+				   == d.properties.continent){
+					dm.choosen_filter = dm.filter.WORLD;
+				}else if(dm.choosen_filter == dm.filter.CONTINENT){
+					dm.choosen_filter = dm.filter.CONTINENT;
+				            dm.choosen_region = d.properties.continent;
+				}else{
+				            dm.choosen_filter = dm.filter.CONTINENT;
+				            dm.choosen_region = d.properties.continent;
+				}
+				worldmap.svg.selectAll("path").remove();
+				worldmap.notifyAll(worldmap.obs, dm);
             })
 	return worldmap.svg;
     }

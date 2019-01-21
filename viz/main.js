@@ -3,7 +3,8 @@ function init() {
     var dm = data_manager();
     var pc = piechart(svg);
     var nutri = nutriscore(svg);
-    var count_graph = country_graph(svg);
+    var legend = legendCircles(svg);
+    var count_graph = country_graph(legend, svg);
     var Observer=[nutri, count_graph, pc];
     var map = worldmap(Observer, svg); 
     map.draw_worldmap(dm);
