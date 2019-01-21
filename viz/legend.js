@@ -95,7 +95,7 @@ function legendCircles(svg){
 			.on("mouseout", function(d,i){
 				colorUpdate(function(j,data){ if(j>=i) data[j]--; });
 			})
-/*			.on("click", function(d,i){
+			.on("click", function(d,i){
 				colorUpdate(function(j,data){ data[j] = (j<i ? 0 : i==ck ? 1 : 3); });
 				var a = d3.select("#c"+i);
 				d3.selectAll(".country-dot").each(function(d2,j,data){
@@ -103,23 +103,6 @@ function legendCircles(svg){
 					b.attr("opacity", (b.attr("r") <= a.attr("r") || i==ck ? 1 : 0.3));
 					console.log(a.attr("r"));
 				});
-				ck = (i==ck ? -1 : i);
-			});
-*/			.on("click", function(d,i){
-				var a = d3.select("#c"+i);
-				if(i==ck){
-					colorUpdate(function(j,data){ data[j] = (j<i ? 0 : 1); });
-					d3.selectAll(".country-dot").each(function(d2){
-						d3.select(this).attr("opacity", 1);
-					});
-				} 
-				else {
-					colorUpdate(function(j,data){ data[j] = (j<i ? 0 : 3); });
-					d3.selectAll(".country-dot").each(function(d2){
-						var b = d3.select(this);
-						b.attr("opacity", (b.attr("r") <= a.attr("r") ? 1 : 0.3));
-					});
-				} 
 				ck = (i==ck ? -1 : i);
 			});
 	
