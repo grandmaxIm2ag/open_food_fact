@@ -16,6 +16,12 @@ function country_graph(legend, svg){
     count_graph.innerHeight = count_graph.height -
         count_graph.margin.top - count_graph.margin.bottom;
 
+    var g = count_graph.svg.append("g")
+        .attr("class", "country-graph")
+        .attr("transform", "translate(" +
+                  count_graph.graphPosition.left + "," +
+                  count_graph.graphPosition.top + ")");
+
     count_graph.drawCountryGraph = function (countries, dm) {
         
         var maxNbProd = d3.max(countries.map(function(o) { return o.products.length; }));
@@ -33,11 +39,6 @@ function country_graph(legend, svg){
                 [count_graph.innerHeight, 0]);
 	    var yAxis = d3.axisLeft(y);
 
-        var g = count_graph.svg.append("g")
-	        .attr("class", "country-graph")
-	        .attr("transform", "translate(" +
-                      count_graph.graphPosition.left + "," +
-                      count_graph.graphPosition.top + ")");
 
 	    g.append("g")
             .attr("class", "axis axis--x_country")

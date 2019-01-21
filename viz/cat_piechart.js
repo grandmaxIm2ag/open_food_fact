@@ -21,13 +21,20 @@ function piechart(svg){
 	var pie = d3.pie()
 	    .value(function(d) { return d.value; })
 	    .sort(null);
+
+	pc.g = pc.svg.append("g")
+        .attr("class", "piechart");
+		
 	    
 	pc.draw = function(countData, dm){
 		
+		pc.g.attr("transform", "translate(" + 
+			(pc.graphPosition.left + pc.margin.left) + "," + 
+			(pc.graphPosition.top + pc.margin.top) + ")");
+		
 		pc.colorShades = function (i, threshold) {
 			if(i == threshold) return d3.rgb(200, 200, 200);
-			var c = dm.choosen_filter == dm.filter.WORLD ? d3.rgb(0,0,0) :
-			color_continent(dm.choosen_region); 
+			var c = dm.choosen_filter == dm.filter.WORLD ? d3.rgb(0, 0, 0) : color_continent(dm.choosen_region); 
 			c.opacity = 1.0 - (i / threshold);
 			return c;
 		};	
@@ -35,7 +42,7 @@ function piechart(svg){
 		var thresh = 10;
 		var data_to_use = countData.slice(0, thresh);
 		data_to_use.push({ key:"others", value:pc.sumValue(countData)-pc.sumValue(data_to_use) });
-	
+		
 		var threshold = (thresh > data_to_use.length) ? data_to_use.length - 2 : thresh; 
 		pc.g.selectAll(".slice")
 			.data(pie(data_to_use))
@@ -47,13 +54,7 @@ function piechart(svg){
 	};
 	
 	pc.notify = function(dm){
-		pc.g = pc.svg.append("g")
-			.attr("transform", "translate(" + (pc.graphPosition.left
-                                               + pc.margin.left) +
-                  "," + (pc.graphPosition.top + pc.margin.top)
-                  + ")")
-             .attr("class", "piechart");
-		pc.svg.selectAll(".slice").remove();
+		pc.g.selectAll(".slice").remove();
 		dm.get_data_piechart(function(data){
 			return pc.draw(data, dm);
 		});
