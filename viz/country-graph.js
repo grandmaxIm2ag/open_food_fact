@@ -164,11 +164,11 @@ function country_graph(legend, svg){
 
         		    var svg_bis = div.append("svg")
         			                 .style("width", 700 + 'px')
-        			                 .style("height", 500 + 'px');
+        			                 .style("height", 200 + 'px');
 
 		        
         		    var nutri_bis = nutriscore(svg_bis);
-        		    nutri_bis.graphPosition = { top: 0, left: 0 };
+        		    nutri_bis.graphPosition = { top: 0, left: 30 };
         		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
 		            nutri_bis.block_popup = true;
 		            var pc = piechart(svg_bis);
@@ -177,6 +177,23 @@ function country_graph(legend, svg){
 		            pc.draw_pie_chart_categories(dm_bis);
 
         		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
+
+                    var table = div.append("table")
+                                    .attr("class", "no-margin width-full")
+                                    .attr("align", "left");
+
+                    var trhead = table.append("thead")
+                                        .append("tr");
+
+                    trhead.append("th").attr("width", "50%");
+                    trhead.append("th").attr("width", "50%");
+
+                    var tbody = table.append("tbody");
+
+                    var row1 = tbody.append("tr");
+                    row1.append("td").text("Nutri-score");
+                    row1.append("td").text("Main categories");
+
         		});
 	        }
 	    });
