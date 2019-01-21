@@ -7,7 +7,7 @@ function piechart(svg){
     };
     
     pc.radius = 80;
-    pc.graphPosition = { top: 400 + pc.radius, left: 830 + pc.radius };
+    pc.graphPosition = { top: 390 + pc.radius, left: 810 + pc.radius };
     pc.margin = { top: 20, right: 20, bottom: 30, left: 40 };
     pc.width = 400 - pc.margin.left - pc.margin.right;
     pc.height = 300 - pc.margin.top - pc.margin.bottom;

@@ -2,7 +2,7 @@ function worldmap(obs, svg){
     var worldmap = {};
     worldmap.obs = obs;
     worldmap.obs.push(worldmap);
-    var graphPosition = { top: 0, left: 740 };
+    var graphPosition = { top: 0, left: 730 };
     var margin = { top: 20, right: 20, bottom: 30, left: 20};
     var width = 400 - margin.left - margin.right;
     var height = 330 - margin.top - margin.bottom;

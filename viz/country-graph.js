@@ -85,7 +85,8 @@ function country_graph(legend, svg){
 	            	var nbNutriA = d.products.filter(
                             o => "a" == o.grade.toLowerCase()).length;
 	               	var propNutriA = (nbNutriA / d.products.length).toFixed(2);
-	                	return count_graph.cellMaxSize * propNutriA;
+
+	                return count_graph.cellMaxSize * propNutriA;
 	            })
 	            .attr("cx", function(d) { return x(d.products.length); })
 	            .attr("cy", function(d) { return y(d.prodCategories.length); })
@@ -153,7 +154,7 @@ function country_graph(legend, svg){
                     row1.append("td").text("Nutri-score A:");
 
                     var nbNutriA = d.products.filter(o => "a" == o.grade.toLowerCase()).length;
-                    var propNutriA = ((nbNutriA / d.products.length) * 100).toFixed(2);
+                    var propNutriA = ((nbNutriA / d.products.length) * 100).toFixed(0);
 
                     row1.append("td").text(propNutriA + "%");
 

@@ -1,7 +1,7 @@
 function nutriscore(svg){ 
     var nutri = {};
     nutri.block_popup = false;
-    nutri.graphPosition = { top: 190, left: 800 };
+    nutri.graphPosition = { top: 165, left: 780 };
     
     nutri.svg = svg;
     nutri.margin = { top: 20, right: 20, bottom: 30, left: 40 };
@@ -76,7 +76,7 @@ function nutriscore(svg){
 	nutri.g.append("text")             
             .attr("transform",
                   "translate(" + ((300 - nutri.margin.left - nutri.margin.right) / 2) + " ," + 
-                  (200 -20) + ")")
+                  (200 -10) + ")")
             .style("text-anchor", "middle")
             .text("Nutriscore Grade");
 
@@ -85,7 +85,7 @@ function nutriscore(svg){
 
 	nutri.g.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 0 - (nutri.margin.left +20))
+            .attr("y", 0 - (nutri.margin.left +25))
             .attr("x",0 - ((200 - nutri.margin.bottom) / 2))
             .attr("dy", "1em")
             .style("text-anchor", "middle")
