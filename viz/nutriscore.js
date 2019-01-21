@@ -11,54 +11,54 @@ function nutriscore(svg){
     nutri.draw = function (data_to_update, dm) {
         var width = 300 - nutri.margin.left - nutri.margin.right,
 	    height = 200 - nutri.margin.top - nutri.margin.bottom;
-	nutri.x.rangeRound([0, width]);
-	nutri.y.rangeRound([height, 0]);
+	    nutri.x.rangeRound([0, width]);
+	    nutri.y.rangeRound([height, 0]);
 
-	nutri.g.select(".axis--x_nutri")
-	    .attr("transform", "translate(0," + height + ")")
-	    .call(d3.axisBottom(nutri.x));
+	    nutri.g.select(".axis--x_nutri")
+	        .attr("transform", "translate(0," + height + ")")
+	        .call(d3.axisBottom(nutri.x));
 
-	
-	nutri.g.select(".axis--y_nutri")
-	    .call(d3.axisLeft(nutri.y));
-        
-	// ENTER
-	nutri.g.selectAll(".bar")
-	    .data(data_to_update)
-	    .enter().append("rect")
-            .attr("class", "bar")
-	    .attr("x", function (d) { return nutri.x(d.grade); })
-	    .attr("y", function (d) {
-		    return nutri.y(d.count); })
-	    .attr("width", nutri.x.bandwidth())
-	    .attr("height", function (d) { return height -
-                                           nutri.y(d.count); })
-	    .attr("fill", function(d) { return color_nutriscore_grade
-					(d.grade); } )
-	    .on("mouseover", function(d) {
-		    if(nutri.block_popup){
-		        return;
-		    }
-		    var div = d3.select("body").append("div")
-		        .attr("class", "tooltip_nutriscore")
-		        .style("opacity", 0.9);
-		        create_popup(div,250,350, function(div){
-		            var dm_bis = dm.copy();
-		            dm_bis.filter_grade = true;
-		            dm_bis.choosen_grade = d.grade;
-		            var svg_bis = div.append("svg")
-			        .style("width", 350 + 'px')
-			        .style("height", 350 + 'px');
-		            var pc = piechart(svg_bis);
-		            pc.graphPosition = { top: 350/2, left: 350/2 };
-		            pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
-		            pc.draw_pie_chart_categories(dm_bis);
-		        });
-		
+	    
+	    nutri.g.select(".axis--y_nutri")
+	        .call(d3.axisLeft(nutri.y));
+            
+	    // ENTER
+	    nutri.g.selectAll(".bar")
+	        .data(data_to_update)
+	        .enter().append("rect")
+                .attr("class", "bar")
+	        .attr("x", function (d) { return nutri.x(d.grade); })
+	        .attr("y", height )
+	        .attr("width", nutri.x.bandwidth())
+	        .attr("fill", function(d) { return color_nutriscore_grade(d.grade); } )
+	        .on("mouseover", function(d) {
+		        if(nutri.block_popup){
+		            return;
+		        }
+		        var div = d3.select("body").append("div")
+		            .attr("class", "tooltip_nutriscore")
+		            .style("opacity", 0.9);
+		            create_popup(div,250,350, function(div){
+		                var dm_bis = dm.copy();
+		                dm_bis.filter_grade = true;
+		                dm_bis.choosen_grade = d.grade;
+		                var svg_bis = div.append("svg")
+			            .style("width", 350 + 'px')
+			            .style("height", 350 + 'px');
+		                var pc = piechart(svg_bis);
+		                pc.graphPosition = { top: 350/2, left: 350/2 };
+		                pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
+		                pc.draw_pie_chart_categories(dm_bis);
+		            });
+		    
             })
-	    .on("mouseout", function(d) {
-		d3.selectAll("div.tooltip_nutriscore").remove();
-            });
+            .on("mouseout", function(d) {
+		        d3.selectAll("div.tooltip_nutriscore").remove();
+            })
+            .transition()
+                .duration(1000)
+                .attr("y", function (d) { return nutri.y(d.count); })
+                .attr("height", function (d) { return height - nutri.y(d.count); });
     };
     
     nutri.notify = function(dm){
