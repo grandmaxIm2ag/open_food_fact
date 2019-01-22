@@ -11,12 +11,12 @@ function nutriscore(svg){
     nutri.draw = function (data_to_update, dm) {
         var width = 300 - nutri.margin.left - nutri.margin.right,
 	    height = 200 - nutri.margin.top - nutri.margin.bottom;
-	nutri.x.rangeRound([0, width]);
-	nutri.y.rangeRound([height, 0]);
+	    nutri.x.rangeRound([0, width]);
+	    nutri.y.rangeRound([height, 0]);
 
-	nutri.g.select(".axis--x_nutri")
-	    .attr("transform", "translate(0," + height + ")")
-	    .call(d3.axisBottom(nutri.x));
+	    nutri.g.select(".axis--x_nutri")
+	        .attr("transform", "translate(0," + height + ")")
+	        .call(d3.axisBottom(nutri.x));
 
 	
 	nutri.g.select(".axis--y_nutri")
@@ -28,13 +28,14 @@ function nutriscore(svg){
 	    .enter().append("rect")
             .attr("class", "bar")
 	    .attr("x", function (d) { return nutri.x(d.grade); })
-	    .attr("y", function (d) {
-		return nutri.y(d.count); })
+	    .attr("y", height)
 	    .attr("width", nutri.x.bandwidth())
-	    .attr("height", function (d) { return height -
-                                           nutri.y(d.count); })
 	    .attr("fill", function(d) { return color_nutriscore_grade
-					(d.grade); } );
+					(d.grade); } )
+        .transition()
+            .duration(1000)
+            .attr("y", function (d) { return nutri.y(d.count); })
+            .attr("height", function (d) { return height - nutri.y(d.count); });
 	
 	nutri.g.selectAll(".bar").on("mouseover", function(d) {
 	    if(nutri.block_popup){
@@ -60,6 +61,7 @@ function nutriscore(svg){
 	    .on("mouseout", function(d) {
 		d3.selectAll("div.tooltip_nutriscore").remove();
             });
+
     };
     
     nutri.notify = function(dm){
