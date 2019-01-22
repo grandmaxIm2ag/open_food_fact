@@ -76,6 +76,15 @@ function piechart(svg){
 	    .attr("y", 10)
 	    .attr("x", 11);
     };
+
+    pc.svg.append("g").append("text")
+    		.attr("transform",
+                  "translate(" + (pc.graphPosition.left + pc.radius / 2) + " ," + 
+                  (pc.graphPosition.top + pc.height/2 - 15 ) + ")")
+            
+            .attr("dy", "1em")
+            .style("text-anchor", "middle")
+            .text("Categories");
     
     pc.notify = function(dm){
 	pc.g.selectAll(".slice").remove();
