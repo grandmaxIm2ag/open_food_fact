@@ -88,6 +88,7 @@ function piechart(svg){
     
     pc.notify = function(dm){
 	pc.g.selectAll(".slice").remove();
+	pc.g.selectAll(".legend").remove();
 	dm.get_data_piechart(function(data){
 	    return pc.draw(data, dm);
 	});
