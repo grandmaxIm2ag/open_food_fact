@@ -180,22 +180,15 @@ function country_graph(legend, svg){
 
         		    nutri_bis.draw_bar_charts_nutriscore(dm_bis);
 
-                    // var table = div.append("table")
-                    //                 .attr("class", "no-margin width-full")
-                    //                 .attr("align", "left");
 
-                    // var trhead = table.append("thead")
-                    //                     .append("tr");
-
-                    // trhead.append("th").attr("width", "50%");
-                    // trhead.append("th").attr("width", "50%");
-
-                    // var tbody = table.append("tbody");
-
-                    // var row1 = tbody.append("tr");
-                    // row1.append("td").text("Nutri-score");
-                    // row1.append("td").text("Main categories");
-
+                    pc.svg.append("g").append("text")
+                        .attr("transform",
+                              "translate(" + (pc.graphPosition.left + pc.radius / 2 - 40) + " ," + 
+                              (pc.graphPosition.top + pc.height/2 - 25 ) + ")")
+                        
+                        .attr("dy", "1em")
+                        .style("text-anchor", "middle")
+                        .text("Categories");
         		});
 	        }
 	    });
