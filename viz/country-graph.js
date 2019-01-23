@@ -172,7 +172,7 @@ function country_graph(legend, svg){
         		    var nutri_bis = nutriscore(svg_bis);
         		    nutri_bis.graphPosition = { top: 0, left: 40 };
         		    nutri_bis.margin = { top: 30, right: 30, bottom: 30, left: 50};
-		            nutri_bis.block_popup = true;
+		            nutri_bis.block_popup = false;
 		            var pc = piechart(svg_bis);
 		            pc.graphPosition = { top: 500/5, left: (3*600)/4 + 10 };
 		            pc.margin = { top: 0, right: 0, bottom: 0, left: 0};
