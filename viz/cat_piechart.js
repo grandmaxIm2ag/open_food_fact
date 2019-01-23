@@ -43,7 +43,12 @@ function piechart(svg){
 	var data_to_use = countData.slice(0, thresh);
 	data_to_use.push({ key:"others", value:pc.sumValue(countData)-pc.sumValue(data_to_use) });
 
-	
+	var total_cat = 0
+	data_to_use.forEach(
+	    function(d){
+		total_cat = total_cat + d.value; 
+	    }
+	);
 	var threshold = (thresh > data_to_use.length) ? data_to_use.length - 2 : thresh; 
 	pc.g.selectAll(".slice")
 	    .data(pie(data_to_use))
@@ -51,8 +56,9 @@ function piechart(svg){
 	    .attr("class", "slice")
 	    .attr('d', arc)
 	    .attr('fill', function(d, i) { return pc.colorShades(i, threshold); })
-	    .append("svg:title").text(function(d) {return  d.data.key+"\n"+d.data.value; });
+	    .append("svg:title").text(function(d) {return  d.data.key+"\n"+((d.data.value/total_cat)*100).toFixed(2)+"%"; });
 
+	
 	var legendG = pc.g.selectAll(".legend")
 	    .data(pie(data_to_use))
 	    .enter().append("g")
