@@ -194,6 +194,8 @@ function country_graph(legend, svg){
 	    });
 
         countryGroup.selectAll("circle").on("mouseover", function(d) {
+        	d3.select(this).style("stroke", "red")
+        		.style("stroke-width", 2);
             var line_data = [
 	        {"x":minNbProd , "y":d.prodCategories.length},
 	        {"x":d.products.length , "y":d.prodCategories.length},
@@ -217,6 +219,7 @@ function country_graph(legend, svg){
 	    countryGroup.selectAll("circle").on("mouseout", function(d) {
             countryGroup.selectAll("path").remove();
             if(!selectCountry) legend.notify(false);
+            d3.select(this).style("stroke", "none");
         });
     };
 
